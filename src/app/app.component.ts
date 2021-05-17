@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { environment } from '../environments/environment';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -15,4 +15,9 @@ export class AppComponent {
     };
 
     scalingChartWidth = Math.floor(window.innerWidth * 0.66);
+    env: any;
+
+    constructor() {
+      this.env = environment;
+    }
 }
