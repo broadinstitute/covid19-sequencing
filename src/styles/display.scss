@@ -101,9 +101,11 @@
 // Content
 //----------------------------------------
 .content-container {
-	max-width: 1430px;
-	padding: 40px;
-	margin: auto;
+	.content {
+		max-width: 1430px;
+		padding: 40px;
+		margin: auto;
+	}
 
 	h2 {
 		border-bottom: 1px solid $color-text;
