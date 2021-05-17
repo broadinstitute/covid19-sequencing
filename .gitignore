@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-#/docs # commiting #dist so we can use github pages?
+/docs/index.html
 /tmp
 /out-tsc
 # Only exists if Bazel was run
