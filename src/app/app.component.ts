@@ -14,7 +14,7 @@ export class AppComponent {
       ]
     };
 
-    scalingChartWidth = Math.floor(Math.max(window.innerWidth, 1430) * 0.66);
+    scalingChartWidth = Math.floor(Math.max(window.innerWidth, 1200) * 0.66);
     env: any;
 
     constructor() {
