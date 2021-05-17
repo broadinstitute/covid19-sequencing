@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ZingchartAngularModule } from 'zingchart-angular';
@@ -12,7 +10,6 @@ import { ZingchartAngularModule } from 'zingchart-angular';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
 
     ZingchartAngularModule
   ],
