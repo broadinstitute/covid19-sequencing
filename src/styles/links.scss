@@ -1,0 +1,23 @@
+.btn-link {
+    color: $color-primary;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s color ease-in-out;
+
+    &:hover, &:focus {
+        color: rgb(36, 199, 199);
+    }
+}
+
+.btn-link-white {
+    color: white;
+    font-weight: Bold;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.3s color ease-in-out;
+
+    &:hover, &:focus {
+        color: rgb(36, 199, 199);
+    }
+}
