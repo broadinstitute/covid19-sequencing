@@ -51,8 +51,10 @@
 }
 
 #introduction-container {
-    padding-right: 0;
-    margin-top: 0;
+    .content {
+        padding-right: 0;
+        margin-top: 0;
+    }
 
     .description {
         color: $color-primary;
@@ -74,6 +76,21 @@
 
         img {
             max-width: 240px;
+        }
+
+        .state-list {
+            flex-wrap: wrap;
+            height: 57px;
+            margin-top: 20px;
+
+            .state-container {
+                width: 160px;
+
+                .state-icon {
+                    color: $color-primary;
+                    width: 30px;
+                }
+            }
         }
     }
 }
