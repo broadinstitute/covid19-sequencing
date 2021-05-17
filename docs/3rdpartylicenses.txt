@@ -7,6 +7,9 @@ MIT
 @angular/platform-browser
 MIT
 
+font-awesome
+(OFL-1.1 AND MIT)
+
 rxjs
 Apache-2.0
                                Apache License
