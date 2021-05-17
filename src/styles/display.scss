@@ -1,0 +1,149 @@
+
+//----------------------------------------
+// Flex
+//----------------------------------------
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.flex-row-reverse {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.flex-col,
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.flex-col-reverse,
+.flex-column-reverse {
+	display: Flex;
+	flex-direction: column-reverse;
+	align-items: center;
+}
+
+
+.flex-right {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.clearfix {
+	&::before,
+	&::after {
+		clear: both;
+	}
+}
+
+//----------------------------------------
+// Margins
+//----------------------------------------
+@for $i from 1 through 10 {
+	.margin-#{$i * 5} {
+		margin: 5px * $i;
+	}
+
+	.margin-top-#{$i * 5} {
+		margin-top: 5px * $i;
+	}
+
+	.margin-bottom-#{$i * 5} {
+		margin-bottom: 5px * $i;
+	}
+
+	.margin-right-#{$i * 5} {
+		margin-right: 5px * $i;
+	}
+
+	.margin-left-#{$i * 5} {
+		margin-left: 5px * $i;
+	}
+}
+
+//----------------------------------------
+// Padding
+//----------------------------------------
+@for $i from 1 through 10 {
+	.padding-#{$i * 5} {
+		padding: 5px * $i;
+	}
+
+	.padding-top-#{$i * 5} {
+		padding-top: 5px * $i;
+	}
+
+	.padding-bottom-#{$i * 5} {
+		padding-bottom: 5px * $i;
+	}
+
+	.padding-right-#{$i * 5} {
+		padding-right: 5px * $i;
+	}
+
+	.padding-left-#{$i * 5} {
+		padding-left: 5px * $i;
+	}
+}
+
+//----------------------------------------
+// Content
+//----------------------------------------
+.content-container {
+	max-width: 1430px;
+	padding: 40px;
+	margin: auto;
+
+	h2 {
+		border-bottom: 1px solid $color-text;
+		padding-bottom: 20px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	&.content-container-alt {
+		background-color: $color-background;
+	}
+
+	&.content-container-accent {
+		color: rgba(255, 255, 255, .8);
+		background-color: $color-primary;
+		padding: 30px 40px;
+
+		h2 {
+			border-bottom: 0;
+			margin-top: 0;
+			padding-bottom: 0;
+			color: white;
+		}
+	}
+
+	&.content-container-black {
+		color: rgba(255, 255, 255, .8);
+		background-color: black;
+		padding: 30px 40px;
+
+		h2 {
+			border-bottom: 0;
+			margin-top: 0;
+			padding-bottom: 0;
+			color: white;
+		}
+	}
+
+	&.content-container-merge {
+		margin-top: -40px;
+	}
+}
+

@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'colors';
+@import 'styles/display';
+@import 'styles/typography';
+
+body {
+    margin: 0;
+    padding: 0;
+    color: $color-text;
+}

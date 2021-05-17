@@ -1,0 +1,123 @@
+@import 'colors';
+
+#header-container {
+    width: 100%;
+
+    h1 {
+        color: white;
+        background-color: $color-primary;
+        width: 100%;
+        min-height: 134px;
+        padding: 0 50px;
+        line-height: 2.3rem;
+        margin: 0;
+    }
+
+    .stat-box {
+        min-width: 160px;
+        flex-shrink: 0;
+        padding: 20px;
+        color: black;
+        background-color: $color-background;
+        text-align: right;
+        font-family: 'Arial';
+
+        .label {
+            font-size: .8rem;
+            font-weight: bold;
+        }
+
+        .value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .detail {
+            color: $color-text;
+            font-size: .8rem;
+            font-weight: bold;
+        }
+
+        .flex-row {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        &.stat-box-accent {
+            background-color: $color-accent;
+        }
+    }
+}
+
+#introduction-container {
+    padding-right: 0;
+    margin-top: 0;
+
+    .description {
+        color: $color-primary;
+        font-size: 1.4rem;
+        width: 100%;
+        padding: 30px 50px;
+        line-height: 2.4rem;
+    }
+
+    .info-card {
+        background-color: $color-background;
+        padding: 35px;
+        max-width: 700px;
+        line-height: 1.8rem;
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 240px;
+        }
+    }
+}
+
+#scaling-container {
+    .flex-row {
+        justify-content: space-between;
+    }
+
+    .description {
+        width: 30%;
+    }
+}
+
+#resources-container {
+    & > .flex-row {
+        margin: 0 -40px;
+        align-items: flex-start;
+
+        & > div {
+            padding: 40px;
+            width: 50%;
+
+            img {
+                display: block;
+            }
+        }
+    }
+}
+
+#acknowledgments-container {
+    padding-bottom: 250px;
+
+    img {
+        width: 180px;
+        float: right;
+        padding-left: 100px;
+    }
+
+    .flex-row {
+        p {
+            font-size: .9rem;
+            margin-right: 80px;
+            line-height: 1.2rem;
+        }
+    }
+}
