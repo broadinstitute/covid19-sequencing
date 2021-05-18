@@ -104,7 +104,7 @@
       </div>
 
       <div>
-        <zingchart-angular [config]="config" [width]="scalingChartWidth"></zingchart-angular>
+        <plotly-plot [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
       </div>
     </div>
   </div>
@@ -171,7 +171,7 @@
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
     <div class="flex-col">
-      <zingchart-angular [config]="config" [width]="variantsChartWidth"></zingchart-angular>
+      <plotly-plot [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
     </div>
   </div>
 </div>

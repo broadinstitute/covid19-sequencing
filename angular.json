@@ -38,7 +38,9 @@
             "stylePreprocessorOptions": {
               "includePaths": [ "src/styles" ]
             },
-            "scripts": []
+            "scripts": [
+              "node_modules/plotly.js/dist/plotly.min.js"
+            ]
           },
           "configurations": {
             "production": {

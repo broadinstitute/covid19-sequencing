@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 
 import { ZingchartAngularModule } from 'zingchart-angular';
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { ZingchartAngularModule } from 'zingchart-angular';
   imports: [
     BrowserModule,
 
-    ZingchartAngularModule
+    ZingchartAngularModule,
+    PlotlyViaWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
