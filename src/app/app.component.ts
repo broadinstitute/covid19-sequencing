@@ -40,8 +40,9 @@ export class AppComponent {
 
     constructor() {
       this.env = environment;
-
-      console.log('AOS', AOS)
+    }
+    
+    ngAfterViewInit() {
       AOS.init({
         offset: 200,
         duration: 300,
