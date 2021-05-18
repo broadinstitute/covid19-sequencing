@@ -1,14 +1,41 @@
+@font-face {
+    font-family: 'StateFace';
+    src: url('https://asymmetrik.github.io/broad-covid-dashboard/assets/fonts/StateFace-Regular.otf');
+    // src: url('/assets/fonts/StateFace-Regular.otf');
+}
+
+@font-face {
+    font-family: 'DIN Pro';
+    src: url('https://asymmetrik.github.io/broad-covid-dashboard/assets/fonts/DINPro Regular.otf');
+    // src: url('/assets/fonts/DINPro Regular.otf');
+    
+}
+@font-face {
+    font-family: 'DIN Pro';
+    src: url('https://asymmetrik.github.io/broad-covid-dashboard/assets/fonts/DINPro Bold.otf');
+    // src: url('/assets/fonts/DINPro Bold.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'DIN Pro';
+    src: url('https://asymmetrik.github.io/broad-covid-dashboard/assets/fonts/DINPro Italic.otf');
+    // src: url('/assets/fonts/DINPro Italic.otf');
+    font-style: italic;
+}
+
 body {
-    font-family: 'Arial';
-    line-height: 1.8rem;
+    font-family: 'DIN Pro';
+    font-size: 19px;
+    line-height: 30px;
+    color: $color-text;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 32px;
 }
 
 h2 {
-    font-size: 1.8rem;
+    font-size: 35px;
 }
 
 p {

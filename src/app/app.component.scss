@@ -10,8 +10,8 @@
         padding: 30px;
         height: 40px;
         text-transform: uppercase;
-        font-weight: 800;
-        font-size: .8rem;
+        font-weight: bold;
+        font-size: 16px;
         transition: .3s ease-in-out color;
         justify-content: flex-end;
         cursor: pointer;
@@ -39,7 +39,7 @@
         color: white;
         background-color: $color-primary;
         width: 100%;
-        min-height: 134px;
+        min-height: 138px;
         padding: 0 50px;
         line-height: 2.3rem;
         margin: 0;
@@ -52,23 +52,23 @@
         color: black;
         background-color: $color-background;
         text-align: right;
-        font-family: 'Arial';
 
         .label {
             font-size: .8rem;
             font-weight: bold;
+            font-family: 'DIN Pro';
         }
 
         .value {
-            font-size: 2.2rem;
+            font-size: 40px;
             font-weight: bold;
-            margin: 5px 0;
+            margin: 12px 0;
         }
 
         .detail {
             color: $color-text;
-            font-size: .8rem;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: normal;
         }
 
         .flex-row {
@@ -98,10 +98,10 @@
 
     .description {
         color: $color-primary;
-        font-size: 1.4rem;
-        font-weight: 600;
+        font-size: 29px;
+        font-weight: 500;
         padding: 30px 50px;
-        line-height: 2.4rem;
+        line-height: 45px;
     }
 
     .info-card {
@@ -126,16 +126,19 @@
             margin-top: 20px;
 
             .state-container {
-                width: 160px;
+                width: 165px;
+                margin-right: 20px;
 
                 .state-icon {
                     color: $color-primary;
                     width: 30px;
+                    margin-right: 5px;
+                    text-align: center;
                 }
 
                 span {
-                    font-weight: 800;
-                    font-size: .9rem;
+                    font-weight: 500;
+                    font-size: 18px;
                 }
             }
         }
