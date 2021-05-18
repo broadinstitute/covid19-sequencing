@@ -47,10 +47,11 @@ export class AppComponent {
         offset: 200,
         duration: 300,
         easing: 'ease-in-sine',
-        delay: 100,
+        delay: 0,
         disable: 'mobile',
         once: true
       });
+
       AOS.refreshHard();
     }
 }
