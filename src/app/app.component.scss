@@ -1,5 +1,31 @@
 @import 'colors';
 
+#navbar {
+    .content {
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .navbar-link {
+        padding: 30px;
+        height: 40px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: .8rem;
+        transition: .3s ease-in-out color;
+        justify-content: flex-end;
+        cursor: pointer;
+
+        &.active {
+            color: $color-primary;
+        }
+
+        &:hover {
+            color: $color-primary-light;
+        }
+    }
+}
+
 #header-container {
     width: 100%;
     box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, .05);

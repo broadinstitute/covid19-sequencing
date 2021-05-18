@@ -9,6 +9,9 @@ export class AppComponent {
     title = 'broad-covid-dashboard';
     env: any;
 
+    // Navbar variables
+    navbarLinks = ['dashboard', 'resources', 'about us', 'methods', 'acknowledgments'];
+
     // Introduction variables
     statesServed = [
       { name: 'Connecticut', glyph: 'G', rotation: 'rotate(-15deg)' },

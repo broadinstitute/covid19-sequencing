@@ -1,3 +1,19 @@
+<div id="navbar" class="content-container">
+  <div class="content flex-row">
+    <img src="{{ env.assetPath }}assets/images/logo.png" alt="Broad Institute Logo" height=100>
+
+    <div class="navbar-links flex-row">
+      <div *ngFor="let link of navbarLinks; let i = index"
+        class="navbar-link flex-col"
+        [class.active]="i === 0">
+        {{ link }}
+      </div>
+    </div>
+
+    <img src="{{ env.assetPath }}assets/images/powered-by-terra.png" alt="Powered by Terra" height=70>
+  </div>
+</div>
+
 <div id="header-container" class="content-container">
   <div class="content flex-row">
     <h1 class="flex-row">
