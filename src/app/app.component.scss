@@ -10,7 +10,7 @@
         padding: 30px;
         height: 40px;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 800;
         font-size: .8rem;
         transition: .3s ease-in-out color;
         justify-content: flex-end;
@@ -83,15 +83,22 @@
 }
 
 #introduction-container {
-    .content {
+    .content.flex-row {
         padding-right: 0;
         margin-top: 0;
+
+        @media screen and (max-width: 1000px) {
+            display: inline-block;
+
+            .info-card {
+                margin: auto;
+            }
+        }
     }
 
     .description {
         color: $color-primary;
         font-size: 1.4rem;
-        width: 100%;
         padding: 30px 50px;
         line-height: 2.4rem;
     }
@@ -103,7 +110,9 @@
         line-height: 1.8rem;
 
         h2 {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 0;
+            border-bottom: 0;
         }
 
         img {

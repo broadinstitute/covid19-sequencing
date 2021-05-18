@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
+
+import * as AOS from 'aos';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -33,7 +35,19 @@ export class AppComponent {
 
     scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.66);
 
+    // Variants variables
+    variantsChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.8);
+
     constructor() {
       this.env = environment;
+
+      AOS.init({
+        offset: 200,
+        duration: 300,
+        easing: 'ease-in-sine',
+        delay: 100,
+        disable: 'mobile',
+        once: true
+      });
     }
 }

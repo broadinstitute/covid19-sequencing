@@ -47,14 +47,14 @@
 
 <div id="introduction-container" class="content-container">
   <div class="content flex-row">
-    <div class="description">
+    <div class="description" data-aos="fade-in">
       The Broad Institute is sequencing the genomes of SARS-CoV-2 viruses
       from residual diagnostic samples to monitor for known and emerging
       variants of concern, and to support the public health response to
       COVID-19.
     </div>
 
-    <div class="info-card">
+    <div class="info-card" data-aos="fade-up">
       <div class="flex-row">
         <img src="{{ env.assetPath }}assets/images/states-served.png" alt="Map of NorthEast USA">
 
@@ -79,7 +79,7 @@
   </div>
 </div>
 
-<div id="scaling-container" class="content-container content-container-merge">
+<div id="scaling-container" class="content-container content-container-merge" data-aos="fade-up">
   <div class="content">
     <h2>Scaling up viral sequencing at the Broad Institute</h2>
 
@@ -110,7 +110,7 @@
   </div>
 </div>
 
-<div class="content-container content-container-accent">
+<div class="content-container content-container-accent" data-aos="fade-up">
   <div class="content">
     <h2>The Broad Institute's COVID-19 viral sequencing effort</h2>
 
@@ -128,7 +128,7 @@
   </div>
 </div>
 
-<div class="content-container">
+<div class="content-container" data-aos="fade-up">
   <div class="content">
     <h2>COVID-19 variant tracking</h2>
 
@@ -167,16 +167,16 @@
   </div>
 </div>
 
-<div id="variant-container" class="content-container">
+<div id="variant-container" class="content-container" data-aos="fade-up">
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
     <div class="flex-col">
-      <zingchart-angular [config]="config" [width]="1200"></zingchart-angular>
+      <zingchart-angular [config]="config" [width]="variantsChartWidth"></zingchart-angular>
     </div>
   </div>
 </div>
 
-<div id="resources-container" class="content-container content-container-alt">
+<div id="resources-container" class="content-container content-container-alt" data-aos="fade-up">
   <div class="content">
     <h2>More resources</h2>
 
