@@ -99,6 +99,7 @@
     .description {
         color: $color-primary;
         font-size: 1.4rem;
+        font-weight: 600;
         padding: 30px 50px;
         line-height: 2.4rem;
     }
@@ -131,6 +132,11 @@
                     color: $color-primary;
                     width: 30px;
                 }
+
+                span {
+                    font-weight: 800;
+                    font-size: .9rem;
+                }
             }
         }
     }
@@ -147,6 +153,9 @@
 }
 
 #resources-container {
+    position: relative;
+    z-index: 50;
+
     .content > .flex-row {
         margin: 0 -40px;
         align-items: flex-start;
@@ -163,7 +172,9 @@
 }
 
 #acknowledgments-container {
+    position: relative;
     padding-bottom: 250px;
+    z-index: 100;
 
     img {
         width: 180px;

@@ -32,41 +32,7 @@ export class AppComponent {
         { values: [3,49,12,23,30, 44] }
       ]
     };
-
-    scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.66);
-    scalingChart = {
-      data: [
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: [3, 9, 18, 30, 45, 55],
-            type: 'scatter',
-            mode: 'lmarkers',
-            marker: {color: 'orange'},
-            name: 'Cumulative'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: [3, 6, 9, 12, 15, 10],
-            type: 'bar',
-            marker: { color: '#046db6' },
-            name: 'Single Day'
-          }
-      ],
-      layout: {
-        width: this.scalingChartWidth,
-        height: this.scalingChartWidth * .6,
-        xaxis: {
-          title: 'Collection Week'
-        },
-        yaxis: {
-          title: 'Count of Samples Sequenced'
-        },
-        showlegend: false,
-        barmode: 'group',
-        bargap: .55,
-        bargroupgap: 4
-      }
-  };
+    scalingChart: any ;
 
     // Variants variables
     variantsChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.8);
@@ -117,8 +83,8 @@ export class AppComponent {
           }
       ],
       layout: {
-        width: this.scalingChartWidth,
-        height: this.scalingChartWidth * .6,
+        width: this.variantsChartWidth,
+        height: this.variantsChartWidth * .6,
         xaxis: {
           title: 'Count'
         },
@@ -126,7 +92,7 @@ export class AppComponent {
           title: 'Count of Samples Sequenced'
         },
         barmode: 'stack',
-        bargap: .3,
+        bargap: .35,
         bargroupgap: 4
       }
   };
@@ -145,6 +111,66 @@ export class AppComponent {
       window.addEventListener('load', AOS.refresh);
     }
 
+    ngOnInit() {
+      this.initializeScalingChart();
+    }
+
+    initializeScalingChart() {
+      let scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.58);
+      let scalingValues = this.getRandomArray(6);
+      let scalingCumulative = [scalingValues[0]];
+      scalingValues.forEach((val, i) => {
+        if (i !== 0) {
+          scalingCumulative[i] = val + scalingCumulative[i-1];
+        }
+      });
+
+      this.scalingChart = {
+        data: [
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: scalingCumulative,
+              text: scalingCumulative,
+              textposition: 'top',
+              type: 'scatter',
+              mode: 'lines+markers+text',
+              marker: {color: 'orange'},
+              name: 'Cumulative',
+              hoverinfo: 'skip'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: scalingValues,
+              type: 'bar',
+              marker: { color: '#046db6' },
+              name: '',
+              hovertemplate: `  <b>Week Count:</b>  <br>  %{y}  `
+            }
+        ],
+        layout: {
+          width: scalingChartWidth,
+          height: scalingChartWidth * .6,
+          xaxis: { title: 'Collection Week' },
+          yaxis: { title: 'Count of Samples Sequenced' },
+          showlegend: false,
+          barmode: 'group',
+          bargap: .55,
+          bargroupgap: 4,
+          hovermode: 'closest',
+          hoverlabel: {
+            bgcolor: '#dcdcdc',
+            bordercolor: '#dcdcdc',
+            font: {
+              color: '#545f6e'
+            }
+          },
+          margin: {
+            l: 0, r: 0, t: 0
+          }
+        }
+      };
+    }
+
     getRandomArray(length: number) {
       let ret = [];
       for (let i = 0; i < length; i++) {
@@ -152,4 +178,6 @@ export class AppComponent {
       }
       return ret;
     }
+
+
 }

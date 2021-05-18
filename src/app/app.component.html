@@ -54,7 +54,7 @@
       COVID-19.
     </div>
 
-    <div class="info-card" data-aos="fade-up">
+    <div class="info-card" data-aos="fade-left" data-aos-delay="300">
       <div class="flex-row">
         <img src="{{ env.assetPath }}assets/images/states-served.png" alt="Map of NorthEast USA">
 
@@ -72,7 +72,7 @@
       </div>
       <div class="state-list flex-col">
         <div *ngFor="let state of statesServed" class="state-container flex-row">
-          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> {{ state.name }}
+          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> <span>{{ state.name }}</span>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
     <h2>Scaling up viral sequencing at the Broad Institute</h2>
 
     <div class="flex-row">
-      <div class="text">
+      <div class="description">
         <p>We are scaling our ability to sequence SARS-CoV-2 from COVID-positive 
         diagnostic samples. Here we show the number of samples being processed 
         each week at the Broad. We strive to generate and share data within 14 
@@ -103,7 +103,8 @@
         </a></p>
       </div>
 
-      <div>
+      <div class="flex-col margin-top-20">
+        <button style="padding: 10px 20px; background: white; border: 1px solid #046db6; color: #046db6">Hide Cumulative</button>
         <plotly-plot [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
       </div>
     </div>
@@ -137,7 +138,7 @@
     <div class="margin-top-5">
       The CDC defines SARS-Cov-2 variants according to three classes:
     
-      <div class="margin-top-10">
+      <div class="margin-top-15 margin-bottom-15">
         <strong>
           Variant of Interest<br/>
           Variant of Concern<br/>
@@ -146,11 +147,11 @@
       </div>
     </div>
 
-    <p>
+    <div>
       Currently the B.1.1.7, B.1.351, B.1.427, and B.1.429 variants circulating in the 
       United States are classified as Variants of Concern.<br/>
       The B.1.525, B.1.526, and P.2 viral lineages are classified as Variants of Interest.
-    </p>
+    </div>
 
     <p>As of now there are no viral lineages classified as Variants of High Consequence. 
       We are tracking known Variants or Concern and of Interest. The numbers of each detected 
