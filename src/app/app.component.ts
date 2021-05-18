@@ -41,6 +41,7 @@ export class AppComponent {
     constructor() {
       this.env = environment;
 
+      console.log('AOS', AOS)
       AOS.init({
         offset: 200,
         duration: 300,
@@ -49,5 +50,6 @@ export class AppComponent {
         disable: 'mobile',
         once: true
       });
+      AOS.refreshHard();
     }
 }
