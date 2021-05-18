@@ -40,9 +40,6 @@ export class AppComponent {
 
     constructor() {
       this.env = environment;
-    }
-    
-    ngAfterViewInit() {
       AOS.init({
         offset: 200,
         duration: 300,
@@ -52,6 +49,6 @@ export class AppComponent {
         once: true
       });
 
-      AOS.refreshHard();
+      window.addEventListener('load', AOS.refresh);
     }
 }
