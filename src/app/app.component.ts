@@ -25,77 +25,9 @@ export class AppComponent {
       { name: 'Vermont', glyph: 't', rotation: 'rotate(-15deg)' }
     ];
 
-    // Scaling variables
-    config:zingchart.graphset = {
-      type: 'line',
-      series: [
-        { values: [3,49,12,23,30, 44] }
-      ]
-    };
-    scalingChart: any ;
-
-    // Variants variables
-    variantsChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.8);
-    variantsChart = {
-      data: [
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            marker: { color: '#eb9f4d' },
-            name: 'B.1.1.7'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            marker: { color: '#e84615' },
-            name: 'P.1'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            marker: { color: '#a83f02' },
-            name: 'B.1.351'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            marker: { color: '#f5c173' },
-            name: 'B.1.427'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            mode: 'lmarkers',
-            marker: {color: '#f26c3e'},
-            name: 'B.1.429'
-          },
-          {
-            x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-            y: this.getRandomArray(6),
-            type: 'bar',
-            marker: { color: '#046db6' },
-            name: 'Other Variants'
-          }
-      ],
-      layout: {
-        width: this.variantsChartWidth,
-        height: this.variantsChartWidth * .6,
-        xaxis: {
-          title: 'Count'
-        },
-        yaxis: {
-          title: 'Count of Samples Sequenced'
-        },
-        barmode: 'stack',
-        bargap: .35,
-        bargroupgap: 4
-      }
-  };
+    scalingChart: any;
+    variantsChart: any;
+    variantsData: any;
 
     constructor() {
       this.env = environment;
@@ -113,6 +45,7 @@ export class AppComponent {
 
     ngOnInit() {
       this.initializeScalingChart();
+      this.initializeVariantsChart();
     }
 
     initializeScalingChart() {
@@ -166,6 +99,103 @@ export class AppComponent {
           },
           margin: {
             l: 0, r: 0, t: 0
+          }
+        }
+      };
+    }
+
+    initializeVariantsChart() {
+      let variantsChartWidth = Math.floor(Math.min(window.innerWidth, 1200) * 0.75);
+      this.variantsData = {
+        groups: [
+          { title: 'Variants of High Consequence', values: [] },
+          {
+            title: 'Variants of Concern',
+            values: [
+              { color: '#eb9f4d', name: 'B.1.1.7', desc: '20I/501Y.V1' },
+              { color: '#e84615', name: 'P.1', desc: '2-J/501Y.V3' },
+              { color: '#a83f02', name: 'B.1.351', desc: '20H/501.V2' },
+              { color: '#f5c173', name: 'B.1.427', desc: '20C/S:452R' },
+              { color: '#f26c3e', name: 'B.1.429', desc: '20H/20C/S:452R.V2' }
+            ]
+          },
+          {
+            title: 'Variants of Interest',
+            values: [
+              { color: '#4c6e32', name: 'B.1.526', desc: '20C' },
+              { color: '#5bb56b', name: 'B.1.525', desc: '20C' },
+              { color: '#256323', name: 'P.2', desc: '20J' }
+            ]
+          },
+          {
+            title: 'Other',
+            values: [
+              { color: '#046db6', name: 'Other Variants' }
+            ]
+          }
+        ]
+      };
+
+      this.variantsChart = {
+        data: [
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: { color: '#eb9f4d' },
+              name: 'B.1.1.7'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: { color: '#e84615' },
+              name: 'P.1'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: { color: '#a83f02' },
+              name: 'B.1.351'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: { color: '#f5c173' },
+              name: 'B.1.427'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: {color: '#f26c3e'},
+              name: 'B.1.429'
+            },
+            {
+              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
+              y: this.getRandomArray(6),
+              type: 'bar',
+              marker: { color: '#046db6' },
+              name: 'Other Variants'
+            }
+        ],
+        layout: {
+          width: variantsChartWidth,
+          height: variantsChartWidth * .6,
+          xaxis: {
+            title: 'Count'
+          },
+          yaxis: {
+            title: 'Count of Samples Sequenced'
+          },
+          barmode: 'stack',
+          bargap: .35,
+          bargroupgap: 4,
+          showlegend: false,
+          margin: {
+            l: 50, r: 50, t: 0
           }
         }
       };

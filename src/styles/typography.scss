@@ -3,10 +3,6 @@ body {
     line-height: 1.8rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Heebo';
-}
-
 h1 {
     font-size: 2rem;
 }
@@ -18,4 +14,22 @@ h2 {
 p {
     margin-top: 35px;
     margin-bottom: 0;
+}
+
+label, .label {
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 14px;
+
+    &.subtitle, .subtitle {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    &.subtitle-accent, .subtitle-accent {
+        font-size: 14px;
+        font-style: italic;
+        font-weight: 400;
+    }
 }

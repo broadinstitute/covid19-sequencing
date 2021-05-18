@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import 'colors';
+
+$palette-primary: map-merge($mat-indigo, (500: $color-primary));
+
+$color-theme: mat-light-theme((
+    color: (
+        primary: mat-palette($palette-primary),
+        accent: mat-palette($mat-green),
+        warn: mat-palette($mat-red)
+    )
+));
+
+$custom-typography: mat-typography-config(
+    $font-family: 'DIN Pro',
+    $headline: mat-typography-level(32px, 38px, 700),
+    $body-1: mat-typography-level(14px, 24px, 500)
+);
+
+@include mat-core($custom-typography);
+@include angular-material-theme($color-theme);

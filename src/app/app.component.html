@@ -54,7 +54,7 @@
       COVID-19.
     </div>
 
-    <div class="info-card" data-aos="fade-left" data-aos-delay="300">
+    <div class="info-card" data-aos="fade-left" data-aos-delay="300 ">
       <div class="flex-row">
         <img src="{{ env.assetPath }}assets/images/states-served.png" alt="Map of NorthEast USA">
 
@@ -104,7 +104,7 @@
       </div>
 
       <div class="flex-col margin-top-20">
-        <button style="padding: 10px 20px; background: white; border: 1px solid #046db6; color: #046db6">Hide Cumulative</button>
+        <button mat-stroked-button color="primary">Hide Cumulative</button>
         <plotly-plot [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
       </div>
     </div>
@@ -168,11 +168,31 @@
   </div>
 </div>
 
-<div id="variant-container" class="content-container" data-aos="fade-up">
+<div id="variants-container" class="content-container" data-aos="fade-up">
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
-    <div class="flex-col">
+    <div class="flex-row margin-top-30">
       <plotly-plot [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
+
+      <div class="chart-controls">
+        <div class="control-group" *ngFor="let controlGroup of variantsData.groups">
+          <div class="flex-row">
+            <mat-slide-toggle color="primary"></mat-slide-toggle>
+            <label class="margin-left-15">{{ controlGroup.title }}</label>
+          </div>
+          <div class="margin-left-50 padding-bottom-10">
+            <label *ngIf="controlGroup.values?.length === 0" class="subtitle-accent">There are currently no reported variants of High Consequence</label>
+
+            <div *ngFor="let value of controlGroup.values" class="flex-row margin-top-10 margin-bottom-10">
+              <i class="fa fa-circle margin-right-5" [style.color]="value.color"></i>
+              <div class="label margin-left-15">
+                <div class="name">{{ value.name }}</div>
+                <div class="subtitle margin-top-5">{{ value.desc }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
