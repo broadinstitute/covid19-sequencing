@@ -68,6 +68,10 @@ export class AppComponent {
       this.initializeVariantsChart();
     }
 
+    ngAfterViewInit() {
+      AOS.refreshHard();
+    }
+
     //------------------------------------------------
     // Site Behavior
     //------------------------------------------------
