@@ -225,6 +225,7 @@ export class AppComponent {
         time: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26']
       };
 
+      let stacks: number[] = this.variantsData.time.map(() => 0);
       this.variantsChart.data = [];
       this.variantsData.groups.forEach((group: any) => {
         group.values.map((val: any) => {
@@ -233,6 +234,7 @@ export class AppComponent {
           // save index so we know what indices to toggle visibility for
           val.index = this.variantsChart.data.length;
           val.origValues = this.getRandomArray(6);
+          val.origValues.forEach((val: number, index: number) => stacks[index] += val);
 
           this.variantsChart.data.push({
             x: this.variantsData.time,
@@ -243,6 +245,8 @@ export class AppComponent {
           });
         });
       });
+
+      (this.variantsChart.layout as any).yaxis.range = [0, Math.max(...stacks) * 1.1];
     }
 
     toggleGroupVisibility(group: any) {
@@ -253,28 +257,27 @@ export class AppComponent {
 
       let emptyArray = { y: this.variantsData.time.map(() => 0) };
       let dataUpdate = this.variantsChart.data.map((d: any) => { return { y: d.y }});
+      let indices: number[] = [];
       group.values.forEach((val: any) => {
         let newValue = group.visible ? { y: val.origValues } : emptyArray;
         dataUpdate[val.index] = newValue;
+        indices.push(val.index);
       });
 
-      let update = { data: dataUpdate };
-      let options = {
-        transition: {
-          duration: 300,
-          easing: 'cubic-in-out'
-        },
-        frame: {
-          duration: 300,
-          delay: 300
-        }
-      };
+      let chart = document.getElementById(this.variantsChartId);
 
-      this.plotly
-        .animate(this.variantsChartId, update, options)
-        .then(() => {
-
-        });
+      // More shenanigans to make it animate well.
+      // Restyle is necessary to remove the traces from the tooltips
+      if (group.visible) {
+        this.plotly
+          .restyle(chart, {'visible': group.visible}, indices)
+          .then(() => this.plotly.animate(this.variantsChartId, { data: dataUpdate }));
+      }
+      else {
+        this.plotly
+          .animate(this.variantsChartId, { data: dataUpdate })
+          .then(() => this.plotly.restyle(chart, {'visible': group.visible}, indices));
+      }
     }
 
     //------------------------------------------------
