@@ -245,7 +245,7 @@ export class AppComponent {
           bargroupgap: 4,
           showlegend: false,
           margin: {
-            l: 50, r: 80, t: 70
+            l: 0, r: 80, t: 70
           }
         }
       };
