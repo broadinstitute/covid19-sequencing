@@ -10,6 +10,7 @@ import * as AOS from 'aos';
 export class AppComponent {
     title = 'broad-covid-dashboard';
     env: any;
+    plotly: any;
 
     // Navbar variables
     navbarLinks = ['dashboard', 'resources', 'about us', 'methods', 'acknowledgments'];
@@ -25,9 +26,12 @@ export class AppComponent {
       { name: 'Vermont', glyph: 't', rotation: 'rotate(-15deg)' }
     ];
 
-    scalingChart: any;
-    variantsChart: any;
-    variantsData: any;
+    scalingChartId = 'scaling-chart';
+    scalingChartMode: 'weekly' | 'combined' = 'combined';
+    scalingChart: { data?: any[], layout?: {}} = {};
+    scalingData: { time?: any[], cumulative?: any, weekly?: any} = {};
+    variantsChart: { data?: any[], layout?: {}} = {};
+    variantsData: any = {};
 
     constructor() {
       this.env = environment;
@@ -41,6 +45,7 @@ export class AppComponent {
       });
 
       window.addEventListener('load', AOS.refresh);
+      this.plotly = (window as any).Plotly;
     }
 
     ngOnInit() {
@@ -48,38 +53,22 @@ export class AppComponent {
       this.initializeVariantsChart();
     }
 
+    //------------------------------------------------
+    // Scaling Chart
+    //------------------------------------------------
     initializeScalingChart() {
       let scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.58);
-      let scalingValues = this.getRandomArray(6);
-      let scalingCumulative = [scalingValues[0]];
-      scalingValues.forEach((val, i) => {
+      this.scalingData.time = ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'];
+      this.scalingData.weekly = this.getRandomArray(6);
+      this.scalingData.cumulative = [this.scalingData.weekly[0]];
+      this.scalingData.weekly.forEach((val: any, i: number) => {
         if (i !== 0) {
-          scalingCumulative[i] = val + scalingCumulative[i-1];
+          this.scalingData.cumulative[i] = val + this.scalingData.cumulative[i-1];
         }
-      });
+      });      
 
       this.scalingChart = {
-        data: [
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: scalingCumulative,
-              text: scalingCumulative,
-              textposition: 'top',
-              type: 'scatter',
-              mode: 'lines+markers+text',
-              marker: {color: 'orange'},
-              name: 'Cumulative',
-              hoverinfo: 'skip'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: scalingValues,
-              type: 'bar',
-              marker: { color: '#046db6' },
-              name: '',
-              hovertemplate: `  <b>Week Count:</b>  <br>  %{y}  `
-            }
-        ],
+        data: [],
         layout: {
           width: scalingChartWidth,
           height: scalingChartWidth * .6,
@@ -98,12 +87,81 @@ export class AppComponent {
             }
           },
           margin: {
-            l: 0, r: 0, t: 0
+            l: 0, r: 0, t: 30
           }
         }
       };
+
+      this.addCumulativeSeries();
+      this.addWeeklySeries();
     }
 
+    addCumulativeSeries() {
+      if (!this.scalingChart.data) return;
+
+      this.scalingChart.data.push({
+        x: this.scalingData.time,
+        y: this.scalingData.cumulative,
+        text: this.scalingData.cumulative,
+        textposition: 'top',
+        type: 'scatter',
+        mode: 'lines+markers+text',
+        marker: {color: 'orange'},
+        name: 'Cumulative',
+        hoverinfo: 'skip'
+      });
+    }
+
+    addWeeklySeries() {
+      if (!this.scalingChart.data) return;
+
+      this.scalingChart.data.push({
+        x: this.scalingData.time,
+        y: this.scalingData.weekly,
+        textposition: 'auto',
+        type: 'bar',
+        marker: { color: '#046db6' },
+        mode: 'markers+text',
+        name: '',
+        hoverinfo: 'skip',
+        hovertemplate: `  <b>Week Count:</b>  <br>  %{y}  `
+      });
+    }
+
+    toggleCumulative() {
+      this.scalingChartMode = this.scalingChartMode === 'combined' ? 'weekly' : 'combined';
+      let newY;
+      let cb;
+      let chart = document.getElementById(this.scalingChartId);
+
+      if (this.scalingChartMode === 'combined') {
+        newY = Math.max(...this.scalingData.cumulative);
+        let weeklyUpdate = {
+          text: null,
+          hovertemplate: `  <b>Week Count:</b>  <br>  %{y}  `,
+        };
+        this.plotly.restyle(chart, weeklyUpdate, [1]);
+        this.plotly.restyle(chart, {'visible': true}, [0]);
+        cb = () => {};
+      }
+      else {
+        newY = Math.max(...this.scalingData.weekly);
+        let weeklyUpdate = {
+          text: [this.scalingData.weekly],
+          hovertemplate: null,
+        };
+        this.plotly.restyle(chart, {'visible': false}, [0]);
+        cb = () => {this.plotly.restyle(chart, weeklyUpdate, [1]); };
+      }
+
+      this.plotly
+        .animate(this.scalingChartId, { layout: { yaxis: { range: [0, newY + 20] } } })
+        .then(cb);
+    }
+
+    //------------------------------------------------
+    // Variants Chart
+    //------------------------------------------------
     initializeVariantsChart() {
       let variantsChartWidth = Math.min(window.innerWidth, 1200) - 260;
       this.variantsData = {
@@ -201,6 +259,9 @@ export class AppComponent {
       };
     }
 
+    //------------------------------------------------
+    // Helpers
+    //------------------------------------------------
     getRandomArray(length: number) {
       let ret = [];
       for (let i = 0; i < length; i++) {

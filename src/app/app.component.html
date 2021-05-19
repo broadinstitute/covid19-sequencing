@@ -105,8 +105,8 @@
       </div>
 
       <div class="flex-col margin-top-20">
-        <button mat-stroked-button color="primary">Hide Cumulative</button>
-        <plotly-plot [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
+        <button mat-stroked-button color="primary" (click)="toggleCumulative()">Hide Cumulative</button>
+        <plotly-plot [divId]="scalingChartId" [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
       </div>
     </div>
   </div>
