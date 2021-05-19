@@ -132,33 +132,29 @@ export class AppComponent {
 
     toggleCumulative() {
       this.scalingChartMode = this.scalingChartMode === 'combined' ? 'weekly' : 'combined';
-      let newY;
-      let cb;
       let chart = document.getElementById(this.scalingChartId);
 
       if (this.scalingChartMode === 'combined') {
-        newY = Math.max(...this.scalingData.cumulative);
         let weeklyUpdate = {
           text: null,
           hovertemplate: `  <b>Week Count:</b>  <br>  %{y}  `,
         };
         this.plotly.restyle(chart, weeklyUpdate, [1]);
-        this.plotly.restyle(chart, {'visible': true}, [0]);
-        cb = () => {};
+        this.plotly.restyle(chart, {visible: true}, [0]);
+        this.plotly.animate(this.scalingChartId, { layout: { yaxis: { range: [0, Math.max(...this.scalingData.cumulative) + 20] } } });
       }
       else {
-        newY = Math.max(...this.scalingData.weekly);
         let weeklyUpdate = {
           text: [this.scalingData.weekly],
           hovertemplate: null,
         };
-        this.plotly.restyle(chart, {'visible': false}, [0]);
-        cb = () => {this.plotly.restyle(chart, weeklyUpdate, [1]); };
+        this.plotly.restyle(chart, {visible: false}, [0]);
+        this.plotly
+          .animate(this.scalingChartId, { layout: { yaxis: { range: [0, Math.max(...this.scalingData.weekly) + 20] } } })
+          .then(() => {
+            this.plotly.restyle(chart, weeklyUpdate, [1]);
+          })
       }
-
-      this.plotly
-        .animate(this.scalingChartId, { layout: { yaxis: { range: [0, newY + 20] } } })
-        .then(cb);
     }
 
     //------------------------------------------------
@@ -270,13 +266,13 @@ export class AppComponent {
       // Restyle is necessary to remove the traces from the tooltips
       if (group.visible) {
         this.plotly
-          .restyle(chart, {'visible': group.visible}, indices)
+          .restyle(chart, {visible: group.visible}, indices)
           .then(() => this.plotly.animate(this.variantsChartId, { data: dataUpdate }));
       }
       else {
         this.plotly
           .animate(this.variantsChartId, { data: dataUpdate })
-          .then(() => this.plotly.restyle(chart, {'visible': group.visible}, indices));
+          .then(() => this.plotly.restyle(chart, {visible: group.visible}, indices));
       }
     }
 
