@@ -173,12 +173,16 @@
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
     <div class="flex-row">
-      <plotly-plot [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
+      <plotly-plot [divId]="variantsChartId" [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
 
       <div class="chart-controls">
         <div class="control-group" *ngFor="let controlGroup of variantsData.groups">
           <div class="flex-row">
-            <mat-slide-toggle color="primary"></mat-slide-toggle>
+            <mat-slide-toggle color="primary"
+              [(ngModel)]="controlGroup.visible"
+              [disabled]="controlGroup.values.length === 0"
+              (change)="toggleGroupVisibility(controlGroup)">
+            </mat-slide-toggle>
             <label class="margin-left-15">{{ controlGroup.title }}</label>
           </div>
           <div class="margin-left-50 padding-bottom-10">

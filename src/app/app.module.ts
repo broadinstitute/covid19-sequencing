@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     BrowserModule,
+    FormsModule,
 
     // Charting
     PlotlyViaWindowModule,

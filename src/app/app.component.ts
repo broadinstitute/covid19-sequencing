@@ -30,6 +30,8 @@ export class AppComponent {
     scalingChartMode: 'weekly' | 'combined' = 'combined';
     scalingChart: { data?: any[], layout?: {}} = {};
     scalingData: { time?: any[], cumulative?: any, weekly?: any} = {};
+
+    variantsChartId = 'variants-chart';
     variantsChart: { data?: any[], layout?: {}} = {};
     variantsData: any = {};
 
@@ -164,81 +166,8 @@ export class AppComponent {
     //------------------------------------------------
     initializeVariantsChart() {
       let variantsChartWidth = Math.min(window.innerWidth, 1200) - 260;
-      this.variantsData = {
-        groups: [
-          { title: 'Variants of High Consequence', values: [] },
-          {
-            title: 'Variants of Concern',
-            values: [
-              { color: '#eb9f4d', name: 'B.1.1.7', desc: '20I/501Y.V1' },
-              { color: '#e84615', name: 'P.1', desc: '2-J/501Y.V3' },
-              { color: '#a83f02', name: 'B.1.351', desc: '20H/501.V2' },
-              { color: '#f5c173', name: 'B.1.427', desc: '20C/S:452R' },
-              { color: '#f26c3e', name: 'B.1.429', desc: '20H/20C/S:452R.V2' }
-            ]
-          },
-          {
-            title: 'Variants of Interest',
-            values: [
-              { color: '#4c6e32', name: 'B.1.526', desc: '20C' },
-              { color: '#5bb56b', name: 'B.1.525', desc: '20C' },
-              { color: '#256323', name: 'P.2', desc: '20J' }
-            ]
-          },
-          {
-            title: 'Other',
-            values: [
-              { color: '#046db6', name: 'Other Variants' }
-            ]
-          }
-        ]
-      };
-
       this.variantsChart = {
-        data: [
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: { color: '#eb9f4d' },
-              name: 'B.1.1.7'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: { color: '#e84615' },
-              name: 'P.1'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: { color: '#a83f02' },
-              name: 'B.1.351'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: { color: '#f5c173' },
-              name: 'B.1.427'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: {color: '#f26c3e'},
-              name: 'B.1.429'
-            },
-            {
-              x: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'],
-              y: this.getRandomArray(6),
-              type: 'bar',
-              marker: { color: '#046db6' },
-              name: 'Other Variants'
-            }
-        ],
+        data: [],
         layout: {
           width: variantsChartWidth,
           height: Math.min(variantsChartWidth * .6, 585),
@@ -246,7 +175,7 @@ export class AppComponent {
             title: 'Count'
           },
           yaxis: {
-            title: 'Count of Samples Sequenced'
+            title: 'Count of Samples Sequenced',
           },
           barmode: 'stack',
           bargap: .35,
@@ -257,6 +186,95 @@ export class AppComponent {
           }
         }
       };
+
+      this.addVariantsData();
+    }
+
+    addVariantsData() {
+      this.variantsData = {
+        groups: [
+          { title: 'Variants of High Consequence', values: [], visible: true },
+          {
+            title: 'Variants of Concern',
+            values: [
+              { color: '#eb9f4d', name: 'B.1.1.7', desc: '20I/501Y.V1' },
+              { color: '#e84615', name: 'P.1', desc: '2-J/501Y.V3' },
+              { color: '#a83f02', name: 'B.1.351', desc: '20H/501.V2' },
+              { color: '#f5c173', name: 'B.1.427', desc: '20C/S:452R' },
+              { color: '#f26c3e', name: 'B.1.429', desc: '20H/20C/S:452R.V2' }
+            ],
+            visible: true
+          },
+          {
+            title: 'Variants of Interest',
+            values: [
+              { color: '#4c6e32', name: 'B.1.526', desc: '20C' },
+              { color: '#5bb56b', name: 'B.1.525', desc: '20C' },
+              { color: '#256323', name: 'P.2', desc: '20J' }
+            ],
+            visible: true
+          },
+          {
+            title: 'Other',
+            values: [
+              { color: '#046db6', name: 'Other Variants' }
+            ],
+            visible: true
+          }
+        ],
+        time: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26']
+      };
+
+      this.variantsChart.data = [];
+      this.variantsData.groups.forEach((group: any) => {
+        group.values.map((val: any) => {
+          if (!this.variantsChart.data) return;
+
+          // save index so we know what indices to toggle visibility for
+          val.index = this.variantsChart.data.length;
+          val.origValues = this.getRandomArray(6);
+
+          this.variantsChart.data.push({
+            x: this.variantsData.time,
+            y: val.origValues,
+            type: 'bar',
+            marker: { color: val.color },
+            name: val.name
+          });
+        });
+      });
+    }
+
+    toggleGroupVisibility(group: any) {
+      // this is just really complex in order to get animations to work...
+      // you have to update the data for animations. Otherwise, if you just
+      // toggle visibility, it blinks in and out. Just doesn't look as good!
+      if (!this.variantsChart.data) return;
+
+      let emptyArray = { y: this.variantsData.time.map(() => 0) };
+      let dataUpdate = this.variantsChart.data.map((d: any) => { return { y: d.y }});
+      group.values.forEach((val: any) => {
+        let newValue = group.visible ? { y: val.origValues } : emptyArray;
+        dataUpdate[val.index] = newValue;
+      });
+
+      let update = { data: dataUpdate };
+      let options = {
+        transition: {
+          duration: 300,
+          easing: 'cubic-in-out'
+        },
+        frame: {
+          duration: 300,
+          delay: 300
+        }
+      };
+
+      this.plotly
+        .animate(this.variantsChartId, update, options)
+        .then(() => {
+
+        });
     }
 
     //------------------------------------------------
