@@ -188,7 +188,7 @@
           <div class="margin-left-50 padding-bottom-10">
             <div *ngIf="controlGroup.values?.length === 0"
               class="label subtitle-accent margin-top-10 margin-bottom-10">
-              There are currently no reported Variants of High Consequence
+              There are currently no reported {{ controlGroup.title }}
             </div>
 
             <div *ngFor="let value of controlGroup.values" class="flex-row margin-top-10 margin-bottom-10">
