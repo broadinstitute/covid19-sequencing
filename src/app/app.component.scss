@@ -156,9 +156,18 @@
 }
 
 #variants-container {
-    .content + .flex-row {
+    .content > .flex-row {
         align-items: flex-start;
+        justify-content: center;
         margin-top: 30px;
+    }
+
+    .chart-controls {
+        width: 260px;
+
+        .subtitle-accent {
+            line-height: 14px;
+        }
     }
 }
 

@@ -72,7 +72,8 @@
       </div>
       <div class="state-list flex-col">
         <div *ngFor="let state of statesServed" class="state-container flex-row">
-          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> <span>{{ state.name }}</span>
+          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> 
+          <span>{{ state.name }}</span>
         </div>
       </div>
     </div>
@@ -98,7 +99,7 @@
         lags in updating across multiple sites. This dashboard is updated 
         weekly.</p>
 
-        <p>For complete reporting of variants, please visit the <a class="btn-link" href="#">
+        <p>For complete reporting of variants, please visit the <a class="btn-link bold" href="#">
           CDC - US COVID-19 Cases Caused by Variants
         </a></p>
       </div>
@@ -163,7 +164,7 @@
       from other public dashboards due to time lags in updating across multiple sites. This 
       dashboard is updated weekly.</p>
 
-    <p>For complete reporting of variants, please visit the <a class="btn-link" href="#">CDC - US COVID-19 
+    <p>For complete reporting of variants, please visit the <a class="btn-link bold" href="#">CDC - US COVID-19 
       Cases Caused by Variants</a></p>
   </div>
 </div>
@@ -171,7 +172,7 @@
 <div id="variants-container" class="content-container" data-aos="fade-up">
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
-    <div class="flex-row margin-top-30">
+    <div class="flex-row">
       <plotly-plot [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
 
       <div class="chart-controls">
@@ -181,7 +182,10 @@
             <label class="margin-left-15">{{ controlGroup.title }}</label>
           </div>
           <div class="margin-left-50 padding-bottom-10">
-            <label *ngIf="controlGroup.values?.length === 0" class="subtitle-accent">There are currently no reported variants of High Consequence</label>
+            <div *ngIf="controlGroup.values?.length === 0"
+              class="label subtitle-accent margin-top-10 margin-bottom-10">
+              There are currently no reported Variants of High Consequence
+            </div>
 
             <div *ngFor="let value of controlGroup.values" class="flex-row margin-top-10 margin-bottom-10">
               <i class="fa fa-circle margin-right-5" [style.color]="value.color"></i>
@@ -210,8 +214,8 @@
           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </div>
-        <a class="btn-link" href="#"><i class="fa fa-external-link"></i> COVID-19_Broad_virl_NGS</a><br>
-        <a class="btn-link" href="#"><i class="fa fa-external-link"></i> COVID-19_cross_tissue_analysis</a>
+        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> COVID-19_Broad_virl_NGS</a><br>
+        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> COVID-19_cross_tissue_analysis</a>
       </div>
 
       <div class="broad-resource">
@@ -222,8 +226,8 @@
           View the Broad's SARS-CoV-2 interactive visualizations built using Auspice, a 
           tool from the Fred Hutch and the Bedford Lab.
         </div>
-        <a class="btn-link" href="#">Read More</a><br/>
-        <a class="btn-link" href="#"><i class="fa fa-external-link"></i> auspice.broadinstitute.org</a>
+        <a class="btn-link bold" href="#">Read More</a><br/>
+        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> auspice.broadinstitute.org</a>
       </div>
     </div>
   </div>

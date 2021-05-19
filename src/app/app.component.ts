@@ -105,7 +105,7 @@ export class AppComponent {
     }
 
     initializeVariantsChart() {
-      let variantsChartWidth = Math.floor(Math.min(window.innerWidth, 1200) * 0.75);
+      let variantsChartWidth = Math.min(window.innerWidth, 1200) - 260;
       this.variantsData = {
         groups: [
           { title: 'Variants of High Consequence', values: [] },
@@ -183,7 +183,7 @@ export class AppComponent {
         ],
         layout: {
           width: variantsChartWidth,
-          height: variantsChartWidth * .6,
+          height: Math.min(variantsChartWidth * .6, 585),
           xaxis: {
             title: 'Count'
           },
@@ -195,7 +195,7 @@ export class AppComponent {
           bargroupgap: 4,
           showlegend: false,
           margin: {
-            l: 50, r: 50, t: 0
+            l: 50, r: 50, t: 50
           }
         }
       };
@@ -204,7 +204,7 @@ export class AppComponent {
     getRandomArray(length: number) {
       let ret = [];
       for (let i = 0; i < length; i++) {
-        ret.push(Math.floor(Math.random() * 100 % 20));
+        ret.push(Math.floor(Math.random() * 100 % 100));
       }
       return ret;
     }
