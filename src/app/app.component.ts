@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { environment } from '../environments/environment';
 
 import * as AOS from 'aos';
+import { ViewportScroller } from '@angular/common';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -13,7 +14,17 @@ export class AppComponent {
     plotly: any;
 
     // Navbar variables
-    navbarLinks = ['dashboard', 'resources', 'about us', 'methods', 'acknowledgments'];
+    navbarLinks = [
+      { title: 'dashboard', id: 'header-container' },
+      { title: 'about us', id: 'broad-container' },
+      { title: 'methods', id: 'methods-container' },
+      { title: 'resources', id: 'resources-container' },
+      { title: 'acknowledgments', id: 'acknowledgments-container' }
+    ];
+
+    // Scroll helpers
+    sectionsLoaded: any = {};
+    activeSection = 'header-container';
 
     // Introduction variables
     statesServed = [
@@ -35,7 +46,9 @@ export class AppComponent {
     variantsChart: { data?: any[], layout?: {}} = {};
     variantsData: any = {};
 
-    constructor() {
+    constructor(
+      private viewportScroller: ViewportScroller
+    ) {
       this.env = environment;
       AOS.init({
         offset: 200,
@@ -46,13 +59,63 @@ export class AppComponent {
         once: true
       });
 
-      window.addEventListener('load', AOS.refresh);
+      this.initScrollBehavior();
       this.plotly = (window as any).Plotly;
     }
 
     ngOnInit() {
       this.initializeScalingChart();
       this.initializeVariantsChart();
+    }
+
+    //------------------------------------------------
+    // Site Behavior
+    //------------------------------------------------
+    initScrollBehavior() {
+      // AOS library says there should be "aos:out" events triggered,
+      // but for some reason they werent being emitted.
+      document.addEventListener('transitionend', (event: any) => {
+        if (event.srcElement.dataset.aos && event.propertyName === 'transform') {
+          this.sectionsLoaded[event.srcElement.id] = true;
+        }
+      });
+
+      document.addEventListener('scroll', () => { this.storeScroll(); }, { passive: true });
+      this.storeScroll();
+    }
+
+    scrollToId(id: string, event: any) {
+      let element = document.getElementById(id);
+      if (!element) return;
+
+      let offset = this.sectionsLoaded[id] ? 0 : -90;
+      let headerOffset = -60;
+      let y = Math.max(0, element?.getBoundingClientRect().top + window.pageYOffset + offset + headerOffset);
+      window.scrollTo({top: y, behavior: 'smooth'});
+      event.srcElement.blur();
+    }
+
+    // Reads out the scroll position and stores it in the data attribute
+    // so we can use it in our stylesheets
+    storeScroll() {
+      (document as any).documentElement.dataset.scroll = window.scrollY;
+
+      let links = this.navbarLinks;
+      for (let link of links) {
+        let element = document.getElementById(link.id);
+        if (!element) return;
+
+        let offset = this.sectionsLoaded[link.id] ? -10 : -100;
+        let headerOffset = -60;
+        let y = Math.max(0, element?.getBoundingClientRect().top + window.pageYOffset) + offset + headerOffset;
+
+        if (y < window.scrollY) {
+          this.activeSection = link.id;
+        }
+        else {
+          break;
+        }
+      }
     }
 
     //------------------------------------------------
@@ -73,7 +136,7 @@ export class AppComponent {
         data: [],
         layout: {
           width: scalingChartWidth,
-          height: scalingChartWidth * .6,
+          height: scalingChartWidth * .7,
           xaxis: { title: 'Collection Week' },
           yaxis: { title: 'Count of Samples Sequenced' },
           showlegend: false,
@@ -90,6 +153,10 @@ export class AppComponent {
           },
           margin: {
             l: 0, r: 0, t: 30
+          },
+          font: {
+            family: 'Lato',
+            size: 16
           }
         }
       };

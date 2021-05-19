@@ -1,16 +1,17 @@
 <div id="navbar" class="content-container">
   <div class="content flex-row">
-    <img src="{{ env.assetPath }}assets/images/logo.png" alt="Broad Institute Logo" height=100>
+    <img class="logo" src="{{ env.assetPath }}assets/images/logo.png" alt="Broad Institute Logo">
 
     <div class="navbar-links flex-row">
-      <div *ngFor="let link of navbarLinks; let i = index"
+      <button *ngFor="let link of navbarLinks; let i = index"
         class="navbar-link flex-col"
-        [class.active]="i === 0">
-        {{ link }}
-      </div>
+        [class.active]="link.id === activeSection"
+        (click)="scrollToId(link.id, $event)">
+        {{ link.title }}
+      </button>
     </div>
 
-    <img src="{{ env.assetPath }}assets/images/powered-by-terra.png" alt="Powered by Terra" height=70>
+    <img class="terra-logo" src="{{ env.assetPath }}assets/images/powered-by-terra.png" alt="Powered by Terra">
   </div>
 </div>
 
@@ -114,7 +115,7 @@
   </div>
 </div>
 
-<div class="content-container content-container-accent" data-aos="fade-up">
+<div id="broad-container" class="content-container content-container-accent" data-aos="fade-up">
   <div class="content">
     <h2>The Broad Institute's COVID-19 viral sequencing effort</h2>
 
@@ -132,7 +133,7 @@
   </div>
 </div>
 
-<div class="content-container" data-aos="fade-up">
+<div id="methods-container" class="content-container" data-aos="fade-up">
   <div class="content">
     <h2>COVID-19 variant tracking</h2>
 
