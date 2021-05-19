@@ -182,7 +182,7 @@ export class AppComponent {
           bargroupgap: 4,
           showlegend: false,
           margin: {
-            l: 50, r: 50, t: 50
+            l: 50, r: 80, t: 70
           }
         }
       };
