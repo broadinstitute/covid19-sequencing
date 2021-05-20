@@ -69,7 +69,7 @@ export class AppComponent {
     }
 
     ngAfterViewInit() {
-      AOS.refreshHard();
+      window.addEventListener('load', AOS.refreshHard);
     }
 
     //------------------------------------------------
