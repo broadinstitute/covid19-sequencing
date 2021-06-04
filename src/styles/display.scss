@@ -158,7 +158,7 @@ html:not([data-scroll='0']) {
 		height: 60px;
 
 		.navbar-link {
-			height: 20px;
+			height: 20px !important;
 		}
 
 		.logo {
