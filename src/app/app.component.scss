@@ -1,0 +1,244 @@
+@import 'colors';
+
+#navbar {
+    background-color: white;
+    width: 100%;
+    position: relative;
+    z-index: 100;
+
+    .content {
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .logo {
+        height: 100%;
+        min-width: 160px;
+        max-width: 250px;
+        transition: .3s ease-in-out transform;
+    }
+
+    .terra-logo {
+        height: 100%;
+        min-width: 100px;
+        max-width: 150px;
+        transition: .3s ease-in-out transform;
+    }
+
+    .navbar-link {
+        padding: 30px;
+        height: 40px;
+        text-transform: uppercase;
+        font-family: 'DIN Pro';
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 0;
+        transition: .3s ease-in-out color, .3s ease-in-out height;
+        justify-content: flex-end;
+        cursor: pointer;
+        background-color: transparent;
+        border: 0;
+        flex-shrink: 0;
+
+        &.active {
+            color: $color-primary;
+        }
+
+        &:hover {
+            color: $color-primary-light;
+        }
+    }
+}
+
+#header-container {
+    width: 100%;
+    box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, .05);
+    background: linear-gradient(90deg, $color-primary 50%, $color-accent 50%);
+
+    .content {
+        padding: 0;
+    }
+
+    h1 {
+        color: white;
+        background-color: $color-primary;
+        width: 100%;
+        min-height: 138px;
+        padding: 0 50px;
+        line-height: 2.3rem;
+        margin: 0;
+    }
+
+    .stat-box {
+        min-width: 160px;
+        flex-shrink: 0;
+        padding: 20px;
+        color: black;
+        background-color: $color-background;
+        text-align: right;
+
+        .label {
+            font-size: .8rem;
+            font-weight: bold;
+            font-family: 'DIN Pro';
+        }
+
+        .value {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .detail {
+            color: $color-text;
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: normal;
+        }
+
+        .flex-row {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        &.stat-box-accent {
+            background-color: $color-accent;
+        }
+    }
+}
+
+#introduction-container {
+    .content.flex-row {
+        padding-right: 0;
+
+        @media screen and (max-width: 1000px) {
+            display: inline-block;
+
+            .info-card {
+                margin: auto;
+            }
+        }
+    }
+
+    .description {
+        color: $color-primary;
+        font-size: 29px;
+        font-weight: 500;
+        padding: 30px 50px;
+        line-height: 45px;
+    }
+
+    .info-card {
+        background-color: $color-background;
+        padding: 35px;
+        max-width: 700px;
+        line-height: 1.8rem;
+
+        h2 {
+            margin-bottom: 15px;
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+
+        img {
+            max-width: 240px;
+        }
+
+        .state-list {
+            flex-wrap: wrap;
+            height: 57px;
+            margin-top: 20px;
+
+            .state-container {
+                width: 165px;
+                margin-right: 20px;
+
+                .state-icon {
+                    color: $color-primary;
+                    width: 30px;
+                    margin-right: 5px;
+                    text-align: center;
+                }
+
+                span {
+                    font-weight: 500;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+#scaling-container {
+    .flex-row {
+        justify-content: space-between;
+
+        @media screen and (max-width: 1100px) {
+            display: block;
+        }
+    }
+
+    .description {
+        width: 37%;
+        padding-right: 60px;
+
+        @media screen and (max-width: 1100px) {
+            width: 100%;
+        }
+    }
+}
+
+#variants-container {
+    .content > .flex-row {
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .chart-controls {
+        width: 260px;
+
+        .subtitle-accent {
+            line-height: 14px;
+        }
+    }
+}
+
+#resources-container {
+    position: relative;
+    z-index: 50;
+
+    .content > .flex-row {
+        margin: 0 -40px;
+        align-items: flex-start;
+
+        & > div {
+            padding: 40px;
+            width: 50%;
+
+            img {
+                display: block;
+            }
+        }
+    }
+}
+
+#acknowledgments-container {
+    position: relative;
+    padding-bottom: 250px;
+    z-index: 100;
+
+    img {
+        width: 180px;
+        float: right;
+        padding-left: 100px;
+    }
+
+    .flex-row {
+        p {
+            font-size: .9rem;
+            margin-right: 80px;
+            line-height: 1.2rem;
+        }
+    }
+}
