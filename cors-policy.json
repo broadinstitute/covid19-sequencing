@@ -1,0 +1,19 @@
+{
+  "cors": [
+    {
+      "origin": [
+        "*"
+      ],
+      "method": [
+        "GET", "OPTIONS"
+      ],
+      "responseHeader": [
+        "Content-Type",
+        "Authorization",
+        "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Origin"
+      ],
+      "maxAgeSeconds": 3600
+    }
+  ]
+}

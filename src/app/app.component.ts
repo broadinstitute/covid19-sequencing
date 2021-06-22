@@ -1,8 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 
 import * as AOS from 'aos';
-import { ViewportScroller } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -27,6 +27,16 @@ export class AppComponent {
     activeSection = 'header-container';
 
     // Introduction variables
+    dataSourceUrl = 'https://storage.googleapis.com/cdc-covid-surveillance-broad-dashboard/metadata-cumulative.txt';
+    data: any = {
+      totalSamplesSequenced: 0,
+      groupedByDate: [],
+      slice: {
+        data: [],
+        timeLabels: []
+      }
+    };
+
     statesServed = [
       { name: 'Connecticut', glyph: 'G', rotation: 'rotate(-15deg)' },
       { name: 'Maine', glyph: 'U', rotation: 'rotate(-15deg)' },
@@ -47,7 +57,7 @@ export class AppComponent {
     variantsData: any = {};
 
     constructor(
-      private viewportScroller: ViewportScroller
+      private http: HttpClient
     ) {
       this.env = environment;
       AOS.init({
@@ -64,8 +74,18 @@ export class AppComponent {
     }
 
     ngOnInit() {
-      this.initializeScalingChart();
-      this.initializeVariantsChart();
+      this.http
+        .get(this.dataSourceUrl, { responseType: 'text'})
+        .subscribe(
+          (data) => {
+            this.parseData(data);
+            this.initializeScalingChart();
+            this.initializeVariantsChart();
+          },
+          (error) => {
+            console.log('there was an error loading the page', error)
+          }
+        );
     }
 
     ngAfterViewInit() {
@@ -123,18 +143,72 @@ export class AppComponent {
     }
 
     //------------------------------------------------
+    // Data
+    // Assumption made that the raw data is provided in sorted order, since the sample file did this.
+    //------------------------------------------------
+    parseData(data: string) {
+      let rows = data.split('\n');
+      let colIndices = this.parseColData(rows.shift());
+      let dateIndex = -1;
+
+      rows.forEach((row) => {
+        let rowArr = row.split('\t');
+        let date = rowArr[colIndices.run_epiweek_end];
+        let sample = rowArr[colIndices.sample_sanitized];
+        let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
+
+        if (dateIndex === -1 || date !== this.data.groupedByDate[dateIndex][0]) {
+          dateIndex++;
+          this.data.groupedByDate.push([date]);
+        }
+
+        if (!failed) {
+          this.data.groupedByDate[dateIndex].push(sample);
+        }
+      });
+
+      this.data.totalSamplesSequenced = rows.length;
+      this.data.slice.data = this.data.groupedByDate.slice(-6);
+      this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
+        return new Date(slice[0]).toLocaleDateString('en-US', {month: 'long', day: 'numeric'});
+      });
+    }
+
+    parseColData(cols: string | undefined) {
+      if (!cols) return {};
+
+      let colsToTrack = [
+        'sample_sanitized',
+        'run_epiweek_end',
+        'geo_state',
+        'genome_status'
+      ];
+      let colIndices: any = {};
+      let colsArr = cols.split('\t');
+      colsArr.forEach((col, index) => {
+        if (colsToTrack.indexOf(col) !== -1) {
+          colIndices[col] = index;
+        }
+      });
+
+      return colIndices;
+    }
+
+    //------------------------------------------------
     // Scaling Chart
     //------------------------------------------------
     initializeScalingChart() {
+      let dataSlice = this.data.groupedByDate.slice(-6);
+
       let scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.58);
-      this.scalingData.time = ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26'];
-      this.scalingData.weekly = this.getRandomArray(6);
+      this.scalingData.time = this.data.slice.timeLabels;
+      this.scalingData.weekly = this.data.slice.data.map((slice: any[]) => Math.max(0, slice.length - 1));
       this.scalingData.cumulative = [this.scalingData.weekly[0]];
       this.scalingData.weekly.forEach((val: any, i: number) => {
         if (i !== 0) {
           this.scalingData.cumulative[i] = val + this.scalingData.cumulative[i-1];
         }
-      });      
+      });
 
       this.scalingChart = {
         data: [],
@@ -289,7 +363,7 @@ export class AppComponent {
             visible: true
           }
         ],
-        time: ['March 22', 'March 29', 'April 5', 'April 12', 'April 19', 'April 26']
+        time: this.data.slice.timeLabels
       };
 
       let stacks: number[] = this.variantsData.time.map(() => 0);

@@ -230,11 +230,11 @@
 
     img {
         width: 180px;
-        float: right;
-        padding-left: 100px;
     }
 
     .flex-row {
+        justify-content: flex-end;
+
         p {
             font-size: .9rem;
             margin-right: 80px;

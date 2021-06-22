@@ -7,21 +7,21 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Set Up Cors
+1. [Get an authorization token from the google OAuth 2.0 playground](https://developers.google.com/oauthplayground/) - Select Access Approval, then select https://www.googleapis.com/auth/cloud-platform
+2. submit curl request to update CORS policy:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice.
+```
+curl --request PATCH \
+ 'https://storage.googleapis.com/storage/v1/b/cdc-covid-surveillance-broad-dashboard' \
+ --header 'Authorization: Bearer [OAUTH2_TOKEN]' \
+ --header 'Content-Type: application/json' \
+ --data-binary @cors-policy.json
+```
 
 ## Further help
 
