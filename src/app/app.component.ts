@@ -69,7 +69,6 @@ export class AppComponent {
         once: true
       });
 
-      this.initScrollBehavior();
       this.plotly = (window as any).Plotly;
     }
 
