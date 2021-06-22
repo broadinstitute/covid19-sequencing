@@ -93,56 +93,6 @@ export class AppComponent {
     }
 
     //------------------------------------------------
-    // Site Behavior
-    //------------------------------------------------
-    initScrollBehavior() {
-      // AOS library says there should be "aos:out" events triggered,
-      // but for some reason they werent being emitted.
-      document.addEventListener('transitionend', (event: any) => {
-        if (event.srcElement.dataset.aos && event.propertyName === 'transform') {
-          this.sectionsLoaded[event.srcElement.id] = true;
-        }
-      });
-
-      document.addEventListener('scroll', () => { this.storeScroll(); }, { passive: true });
-      this.storeScroll();
-    }
-
-    scrollToId(id: string, event: any) {
-      let element = document.getElementById(id);
-      if (!element) return;
-
-      let offset = this.sectionsLoaded[id] ? 0 : -90;
-      let headerOffset = -60;
-      let y = Math.max(0, element?.getBoundingClientRect().top + window.pageYOffset + offset + headerOffset);
-      window.scrollTo({top: y, behavior: 'smooth'});
-      event.srcElement.blur();
-    }
-
-    // Reads out the scroll position and stores it in the data attribute
-    // so we can use it in our stylesheets
-    storeScroll() {
-      (document as any).documentElement.dataset.scroll = window.scrollY;
-
-      let links = this.navbarLinks;
-      for (let link of links) {
-        let element = document.getElementById(link.id);
-        if (!element) return;
-
-        let offset = this.sectionsLoaded[link.id] ? -10 : -100;
-        let headerOffset = -60;
-        let y = Math.max(0, element?.getBoundingClientRect().top + window.pageYOffset) + offset + headerOffset;
-
-        if (y < window.scrollY) {
-          this.activeSection = link.id;
-        }
-        else {
-          break;
-        }
-      }
-    }
-
-    //------------------------------------------------
     // Data
     // Assumption made that the raw data is provided in sorted order, since the sample file did this.
     //------------------------------------------------
