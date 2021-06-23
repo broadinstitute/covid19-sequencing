@@ -35,7 +35,8 @@ export class AppComponent {
         data: [],
         timekeys: [],
         timeLabels: []
-      }
+      },
+      error: false
     };
 
     statesServed = [
@@ -75,15 +76,15 @@ export class AppComponent {
 
     ngOnInit() {
       this.http
-        .get(this.dataSourceUrl, { responseType: 'text'})
+        .get(this.dataSourceUrl, { responseType: 'json'})
         .subscribe(
-          (data) => {
+          (data: any) => {
             this.parseData(data);
             this.initializeScalingChart();
             this.initializeVariantsChart();
           },
           (error) => {
-            console.log('there was an error loading the page', error)
+            this.data.error = error;
           }
         );
     }
@@ -282,8 +283,6 @@ export class AppComponent {
     }
 
     addVariantsData() {
-      console.log('variants', this.data.slice)
-
       // Variables to determine the "other variants" count
       let variantsByTime: any = {};
       let declaredVariants = [
@@ -355,8 +354,6 @@ export class AppComponent {
       this.variantsChart.data = [];
       this.variantsData.groups.forEach((group: any) => {
         group.values.map((val: any) => {
-          console.log('val', val)
-          console.log('variantsByTime', variantsByTime[val.name])
           if (!this.variantsChart.data) return;
 
           // save index so we know what indices to toggle visibility for

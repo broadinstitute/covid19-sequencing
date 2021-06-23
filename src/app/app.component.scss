@@ -186,6 +186,10 @@
             width: 100%;
         }
     }
+
+    .chart-container {
+        position: relative;
+    }
 }
 
 #variants-container {
@@ -201,6 +205,11 @@
         .subtitle-accent {
             line-height: 14px;
         }
+    }
+
+    .error-container {
+        top: 45%;
+        left: 28%;
     }
 }
 
@@ -240,5 +249,25 @@
             margin-right: 80px;
             line-height: 1.2rem;
         }
+    }
+}
+
+.error-container {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    z-index: 1;
+    background-color:rgba(0, 0, 0, .05);
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    opacity: .9;
+
+    &::before {
+        content: '\f071';
+        font: normal normal normal 23px/1 "FontAwesome";
+        color: red;
+        margin-right: 20px;
     }
 }

@@ -81,8 +81,12 @@
         </p>
       </div>
 
-      <div class="flex-col margin-top-20">
-        <button mat-stroked-button color="primary" (click)="toggleCumulative()">
+      <div class="flex-col margin-top-20 chart-container">
+        <div *ngIf="data.error" class="error-container">
+          There was a problem loading this chart, <br/>
+          please refresh the page to reload
+        </div>
+        <button mat-stroked-button color="primary" (click)="toggleCumulative()" *ngIf="!data.error">
           {{ scalingChartMode === 'combined' ? 'Hide' : 'Show'}} Cumulative
         </button>
         <plotly-plot [divId]="scalingChartId" [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
@@ -134,6 +138,11 @@
   <div class="content">
     <h2>Weekly counts of variants detected at the Broad Institute</h2>
     <div class="flex-row">
+      <div *ngIf="data.error" class="error-container">
+        There was a problem loading this chart, <br/>
+        please refresh the page to reload
+      </div>
+
       <div class="margin-right-30">
         <plotly-plot [divId]="variantsChartId" [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
       </div>
