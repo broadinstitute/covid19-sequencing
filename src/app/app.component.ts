@@ -76,7 +76,7 @@ export class AppComponent {
 
     ngOnInit() {
       this.http
-        .get(this.dataSourceUrl, { responseType: 'json'})
+        .get(this.dataSourceUrl, { responseType: 'text'})
         .subscribe(
           (data: any) => {
             this.parseData(data);
