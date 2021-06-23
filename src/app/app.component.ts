@@ -36,6 +36,7 @@ export class AppComponent {
         timekeys: [],
         timeLabels: []
       },
+      lastUpdated: '--',
       error: false
     };
 
@@ -111,6 +112,7 @@ export class AppComponent {
         if (dateIndex === -1 || date !== this.data.groupedByDate[dateIndex][0]) {
           dateIndex++;
           this.data.groupedByDate.push([date]);
+          this.data.lastUpdated = date;
         }
 
         if (!failed) {
