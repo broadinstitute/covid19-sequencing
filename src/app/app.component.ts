@@ -33,6 +33,7 @@ export class AppComponent {
       groupedByDate: [],
       slice: {
         data: [],
+        timekeys: [],
         timeLabels: []
       }
     };
@@ -103,7 +104,7 @@ export class AppComponent {
       rows.forEach((row) => {
         let rowArr = row.split('\t');
         let date = rowArr[colIndices.run_epiweek_end];
-        let sample = rowArr[colIndices.sample_sanitized];
+        let lineage = rowArr[colIndices.pango_lineage];
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
 
         if (dateIndex === -1 || date !== this.data.groupedByDate[dateIndex][0]) {
@@ -112,12 +113,13 @@ export class AppComponent {
         }
 
         if (!failed) {
-          this.data.groupedByDate[dateIndex].push(sample);
+          this.data.groupedByDate[dateIndex].push(lineage);
         }
       });
 
       this.data.totalSamplesSequenced = rows.length;
       this.data.slice.data = this.data.groupedByDate.slice(-6);
+      this.data.slice.timeKeys = this.data.slice.data.map((slice: any[]) => slice[0]);
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
         return new Date(slice[0]).toLocaleDateString('en-US', {month: 'long', day: 'numeric'});
       });
@@ -127,9 +129,8 @@ export class AppComponent {
       if (!cols) return {};
 
       let colsToTrack = [
-        'sample_sanitized',
+        'pango_lineage',
         'run_epiweek_end',
-        'geo_state',
         'genome_status'
       ];
       let colIndices: any = {};
@@ -281,26 +282,61 @@ export class AppComponent {
     }
 
     addVariantsData() {
+      console.log('variants', this.data.slice)
+
+      // Variables to determine the "other variants" count
+      let variantsByTime: any = {};
+      let declaredVariants = [
+        'B.1.1.7', 'P.1', 'B.1.351', 'B.1.427', 'B.1.429', // concern
+        'B.1.526', 'B.1.525', 'P.2' // interest
+      ];
+
+      // Converting the raw data into chart data
+      this.data.slice.data.forEach((variantsByDateArr: string[]) => {
+        let date = variantsByDateArr[0];
+
+        variantsByDateArr.forEach((variant: string, index: number) => {
+          if (index === 0) {
+            return;
+          }
+
+          if (declaredVariants.indexOf(variant) === -1) {
+            variant = 'Other Variants';
+          }
+
+          if (!variantsByTime[variant]) {
+            variantsByTime[variant] = {};
+          }
+
+          if (!variantsByTime[variant][date]) {
+            variantsByTime[variant][date] = 0;
+          }
+
+          variantsByTime[variant][date]++;
+        });
+      });
+
+
       this.variantsData = {
         groups: [
           { title: 'Variants of High Consequence', values: [], visible: true },
           {
             title: 'Variants of Concern',
             values: [
-              { color: '#eb9f4d', name: 'B.1.1.7', desc: '20I/501Y.V1' },
-              { color: '#e84615', name: 'P.1', desc: '2-J/501Y.V3' },
-              { color: '#a83f02', name: 'B.1.351', desc: '20H/501.V2' },
-              { color: '#f5c173', name: 'B.1.427', desc: '20C/S:452R' },
-              { color: '#f26c3e', name: 'B.1.429', desc: '20H/20C/S:452R.V2' }
+              { color: '#eb9f4d', name: 'B.1.1.7' },
+              { color: '#e84615', name: 'P.1' },
+              { color: '#a83f02', name: 'B.1.351' },
+              { color: '#f5c173', name: 'B.1.427' },
+              { color: '#f26c3e', name: 'B.1.429' }
             ],
             visible: true
           },
           {
             title: 'Variants of Interest',
             values: [
-              { color: '#4c6e32', name: 'B.1.526', desc: '20C' },
-              { color: '#5bb56b', name: 'B.1.525', desc: '20C' },
-              { color: '#256323', name: 'P.2', desc: '20J' }
+              { color: '#4c6e32', name: 'B.1.526' },
+              { color: '#5bb56b', name: 'B.1.525' },
+              { color: '#256323', name: 'P.2' }
             ],
             visible: true
           },
@@ -319,11 +355,15 @@ export class AppComponent {
       this.variantsChart.data = [];
       this.variantsData.groups.forEach((group: any) => {
         group.values.map((val: any) => {
+          console.log('val', val)
+          console.log('variantsByTime', variantsByTime[val.name])
           if (!this.variantsChart.data) return;
 
           // save index so we know what indices to toggle visibility for
           val.index = this.variantsChart.data.length;
-          val.origValues = this.getRandomArray(6);
+          val.origValues = this.data.slice.timeKeys.map((key: string) => {
+            return variantsByTime[val.name][key] || 0;
+          });
           val.origValues.forEach((val: number, index: number) => stacks[index] += val);
 
           this.variantsChart.data.push({
