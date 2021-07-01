@@ -133,6 +133,7 @@ export class AppComponent {
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
         return slice[0];
       });
+      this.data.lastUpdated = sortedDates[sortedDates.length - 1];
     }
 
     parseColData(cols: string | undefined) {
