@@ -86,6 +86,7 @@ export class AppComponent {
           },
           (error) => {
             this.data.error = error;
+            console.log('error', error)
           }
         );
     }
@@ -106,8 +107,11 @@ export class AppComponent {
       rows.forEach((row) => {
         let rowArr = row.split('\t');
         let date = rowArr[colIndices.run_epiweek_end];
-        let lineage = rowArr[colIndices.pango_lineage];
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
+        let clade = rowArr[colIndices.nextclade_clade];
+        let lineage = clade.indexOf('(') === -1
+          ? rowArr[colIndices.pango_lineage]
+          : clade;
 
         if (dateIndex === -1 || date !== this.data.groupedByDate[dateIndex][0]) {
           dateIndex++;
@@ -120,7 +124,7 @@ export class AppComponent {
         }
       });
 
-      this.data.totalSamplesSequenced = rows.length;
+      this.data.totalSamplesSequenced = this.data.groupedByDate.reduce((a: number, b: string[]) => a + b.length - 1, 0);
       this.data.slice.data = this.data.groupedByDate.slice(-6);
       this.data.slice.timeKeys = this.data.slice.data.map((slice: any[]) => slice[0]);
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
@@ -134,7 +138,8 @@ export class AppComponent {
       let colsToTrack = [
         'pango_lineage',
         'run_epiweek_end',
-        'genome_status'
+        'genome_status',
+        'nextclade_clade'
       ];
       let colIndices: any = {};
       let colsArr = cols.split('\t');
@@ -156,7 +161,10 @@ export class AppComponent {
       let scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.58);
       this.scalingData.time = this.data.slice.timeLabels;
       this.scalingData.weekly = this.data.slice.data.map((slice: any[]) => Math.max(0, slice.length - 1));
-      this.scalingData.cumulative = [this.scalingData.weekly[0]];
+      let totalWeekly = this.scalingData.weekly.reduce((a: number, b: number) => a + b, 0);
+      
+
+      this.scalingData.cumulative = [this.data.totalSamplesSequenced - totalWeekly + this.scalingData.weekly[0]];
       this.scalingData.weekly.forEach((val: any, i: number) => {
         if (i !== 0) {
           this.scalingData.cumulative[i] = val + this.scalingData.cumulative[i-1];
@@ -287,10 +295,7 @@ export class AppComponent {
     addVariantsData() {
       // Variables to determine the "other variants" count
       let variantsByTime: any = {};
-      let declaredVariants = [
-        'B.1.1.7', 'P.1', 'B.1.351', 'B.1.427', 'B.1.429', // concern
-        'B.1.526', 'B.1.525', 'P.2' // interest
-      ];
+      let variantsOfInterest: any = {};
 
       // Converting the raw data into chart data
       this.data.slice.data.forEach((variantsByDateArr: string[]) => {
@@ -301,7 +306,14 @@ export class AppComponent {
             return;
           }
 
-          if (declaredVariants.indexOf(variant) === -1) {
+          let regExp = /\(([^)]+)\)/;
+          let matches = variant.match(regExp);
+
+          if (matches) {
+            variant = matches[1];
+            variantsOfInterest[variant] = 1;
+          }
+          else {
             variant = 'Other Variants';
           }
 
@@ -317,28 +329,20 @@ export class AppComponent {
         });
       });
 
+      let variantColors = [
+        '#eb9f4d', '#e84615', '#a83f02',
+        '#f5c173', '#f26c3e', '#f11808',
+        '#f1eb08', '#e0c602', '#fd9f3b'
+      ]
 
       this.variantsData = {
         groups: [
           { title: 'Variants of High Consequence', values: [], visible: true },
           {
-            title: 'Variants of Concern',
-            values: [
-              { color: '#eb9f4d', name: 'B.1.1.7' },
-              { color: '#e84615', name: 'P.1' },
-              { color: '#a83f02', name: 'B.1.351' },
-              { color: '#f5c173', name: 'B.1.427' },
-              { color: '#f26c3e', name: 'B.1.429' }
-            ],
-            visible: true
-          },
-          {
-            title: 'Variants of Interest',
-            values: [
-              { color: '#4c6e32', name: 'B.1.526' },
-              { color: '#5bb56b', name: 'B.1.525' },
-              { color: '#256323', name: 'P.2' }
-            ],
+            title: 'Variants of Concern or Interest',
+            values: Object.keys(variantsOfInterest).map((variant, idx) => {
+              return { color: variantColors[idx], name: variant };
+            }),
             visible: true
           },
           {

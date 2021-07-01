@@ -38,7 +38,7 @@
 
     <div class="info-card" data-aos="fade-left" data-aos-delay="300 ">
       <div class="flex-row">
-        <img src="{{ env.assetPath }}assets/images/states-served.png" alt="Map of NorthEast USA">
+        <img src="{{ env.assetPath }}assets/images/states-served.png" alt="Map of NorthEast USA: Connecticut, Maine, Massachusetts, New York, New Hampshire, Rhode Island, and Vermont">
 
         <div class="padding-left-30">
           <h2>States we serve</h2>
@@ -52,12 +52,12 @@
           </div>
         </div>
       </div>
-      <div class="state-list flex-col">
+      <!-- <div class="state-list flex-col">
         <div *ngFor="let state of statesServed" class="state-container flex-row">
           <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> 
           <span>{{ state.name }}</span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -109,7 +109,10 @@
       slow the spread of concerning variants, and with the scientific community to learn 
       more about the evolution and spread of SARS-CoV-2.
     <br/>
-    Learn more in a <a class="btn-link-white" href="#">Broad news story and video</a>.</div>
+    Learn more in a 
+    <a class="btn-link-white" href="https://www.broadinstitute.org/news/broad-expands-covid-19-viral-sequencing-efforts-variant-surveillance-northeast">
+    Broad news story and video</a>.
+    </div>
   </div>
 </div>
 
@@ -184,32 +187,31 @@
     <div class="flex-row">
       <div class="terra-resource">
         <img src="{{ env.assetPath }}assets/images/terra-logo.png" width=200>
-        <h3>Terra Covid Workspaces</h3>
+        <h3>Terra Workspaces</h3>
         <div class="margin-top-10">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Data and analytical tools are shared openly in a newly featured 
+          <a class="btn-link bold" href="https://app.terra.bio/#workspaces/pathogen-genomic-surveillance/COVID-19_Broad_Viral_NGS">COVID-19 Broad Viral NGS workspace</a> 
+          in Terra, so other research and public health labs can explore and use these resources for their own work. 
+          The workspace is designed to enable researchers to go all the way from raw reads to phylogenetic trees 
+          using their own data.
         </div>
-        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> COVID-19_Broad_virl_NGS</a><br>
-        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> COVID-19_cross_tissue_analysis</a>
       </div>
 
       <div class="broad-resource">
         <img src="{{ env.assetPath }}assets/images/resources-2.png" height=200>
-        <h3>Broad SARS Cov-2 Auspice</h3>
+        <h3>Broad SARS-CoV-2 Phylogenetic Trees</h3>
 
         <div class="margin-top-10">
-          View the Broad's SARS-CoV-2 interactive visualizations built using Auspice, a 
-          tool from the Fred Hutch and the Bedford Lab.
+          View the Broad’s SARS-CoV-2 interactive 
+          <a class="btn-link bold" href="https://auspice.broadinstitute.org/">visualizations</a> built using 
+          Auspice, a tool from the Fred Hutch and the Bedford Lab.
         </div>
-        <a class="btn-link bold" href="#">Read More</a><br/>
-        <a class="btn-link bold" href="#"><i class="fa fa-external-link"></i> auspice.broadinstitute.org</a>
       </div>
     </div>
   </div>
 </div>
 
-<div id="acknowledgments-container" class="content-container content-container-black">
+<div id="acknowledgments-container" class="content-container">
   <div class="content flex-row">
     <div></div>
     <div>
