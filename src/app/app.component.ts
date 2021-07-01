@@ -97,38 +97,41 @@ export class AppComponent {
 
     //------------------------------------------------
     // Data
-    // Assumption made that the raw data is provided in sorted order, since the sample file did this.
     //------------------------------------------------
     parseData(data: string) {
       let rows = data.split('\n');
       let colIndices = this.parseColData(rows.shift());
-      let dateIndex = -1;
+      let dateMap: any = {};
 
       rows.forEach((row) => {
         let rowArr = row.split('\t');
-        let date = rowArr[colIndices.run_epiweek_end];
+        let date = rowArr[colIndices.collection_epiweek_end];
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
         let clade = rowArr[colIndices.nextclade_clade];
         let lineage = clade.indexOf('(') === -1
           ? rowArr[colIndices.pango_lineage]
           : clade;
 
-        if (dateIndex === -1 || date !== this.data.groupedByDate[dateIndex][0]) {
-          dateIndex++;
-          this.data.groupedByDate.push([date]);
-          this.data.lastUpdated = date;
-        }
-
         if (!failed) {
-          this.data.groupedByDate[dateIndex].push(lineage);
+          if (!dateMap[date]) {
+            dateMap[date] = [date];
+          }
+          dateMap[date].push(lineage);
         }
       });
 
+      let sortedDates = Object.keys(dateMap)
+        .sort((a: string, b: string) => {
+          return new Date(a) > new Date(b) ? 1 : -1;
+        });
+      
+      this.data.groupedByDate = sortedDates.map((a: string) => dateMap[a]);
       this.data.totalSamplesSequenced = this.data.groupedByDate.reduce((a: number, b: string[]) => a + b.length - 1, 0);
-      this.data.slice.data = this.data.groupedByDate.slice(-6);
+      this.data.slice.length = this.data.groupedByDate.length;
+      this.data.slice.data = this.data.groupedByDate.slice(-1 * this.data.slice.length);
       this.data.slice.timeKeys = this.data.slice.data.map((slice: any[]) => slice[0]);
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
-        return new Date(slice[0]).toLocaleDateString('en-US', {month: 'long', day: 'numeric'});
+        return slice[0];
       });
     }
 
@@ -137,9 +140,9 @@ export class AppComponent {
 
       let colsToTrack = [
         'pango_lineage',
-        'run_epiweek_end',
         'genome_status',
-        'nextclade_clade'
+        'nextclade_clade',
+        'collection_epiweek_end'
       ];
       let colIndices: any = {};
       let colsArr = cols.split('\t');
@@ -156,13 +159,10 @@ export class AppComponent {
     // Scaling Chart
     //------------------------------------------------
     initializeScalingChart() {
-      let dataSlice = this.data.groupedByDate.slice(-6);
-
       let scalingChartWidth = Math.floor(Math.min(window.innerWidth, 1430) * 0.58);
       this.scalingData.time = this.data.slice.timeLabels;
       this.scalingData.weekly = this.data.slice.data.map((slice: any[]) => Math.max(0, slice.length - 1));
       let totalWeekly = this.scalingData.weekly.reduce((a: number, b: number) => a + b, 0);
-      
 
       this.scalingData.cumulative = [this.data.totalSamplesSequenced - totalWeekly + this.scalingData.weekly[0]];
       this.scalingData.weekly.forEach((val: any, i: number) => {
@@ -176,7 +176,7 @@ export class AppComponent {
         layout: {
           width: scalingChartWidth,
           height: scalingChartWidth * .7,
-          xaxis: { title: 'Collection Week' },
+          xaxis: { title: 'Collection Week', standoff: 100 },
           yaxis: { title: 'Count of Samples Sequenced' },
           showlegend: false,
           barmode: 'group',
@@ -191,7 +191,7 @@ export class AppComponent {
             }
           },
           margin: {
-            l: 0, r: 0, t: 30
+            l: 0, r: 0, t: 30, b: 130
           },
           font: {
             family: 'Lato',
@@ -210,13 +210,12 @@ export class AppComponent {
       this.scalingChart.data.push({
         x: this.scalingData.time,
         y: this.scalingData.cumulative,
-        text: this.scalingData.cumulative,
-        textposition: 'top',
         type: 'scatter',
         mode: 'lines+markers+text',
         marker: {color: 'orange'},
-        name: 'Cumulative',
-        hoverinfo: 'skip'
+        name: '',
+        hoverinfo: 'skip',
+        hovertemplate: `  <b>Total Count:</b>  <br>  %{y}`
       });
     }
 
