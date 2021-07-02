@@ -120,14 +120,15 @@ export class AppComponent {
         }
       });
 
-      let sortedDates = Object.keys(dateMap)
+      let sortedDates = Object
+        .keys(dateMap)
         .sort((a: string, b: string) => {
           return new Date(a) > new Date(b) ? 1 : -1;
         });
       
       this.data.groupedByDate = sortedDates.map((a: string) => dateMap[a]);
       this.data.totalSamplesSequenced = this.data.groupedByDate.reduce((a: number, b: string[]) => a + b.length - 1, 0);
-      this.data.slice.length = this.data.groupedByDate.length;
+      this.data.slice.length = sortedDates.filter((a: string) => new Date(a).getFullYear() === new Date().getFullYear()).length;
       this.data.slice.data = this.data.groupedByDate.slice(-1 * this.data.slice.length);
       this.data.slice.timeKeys = this.data.slice.data.map((slice: any[]) => slice[0]);
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
@@ -192,7 +193,7 @@ export class AppComponent {
             }
           },
           margin: {
-            l: 0, r: 0, t: 30, b: 130
+            l: 0, r: 100, t: 30, b: 130
           },
           font: {
             family: 'Lato',
@@ -284,7 +285,7 @@ export class AppComponent {
           bargroupgap: 4,
           showlegend: false,
           margin: {
-            l: 0, r: 80, t: 70
+            l: 0, r: 0, t: 70
           }
         }
       };
