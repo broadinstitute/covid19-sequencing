@@ -128,7 +128,7 @@ export class AppComponent {
       
       this.data.groupedByDate = sortedDates.map((a: string) => dateMap[a]);
       this.data.totalSamplesSequenced = this.data.groupedByDate.reduce((a: number, b: string[]) => a + b.length - 1, 0);
-      this.data.slice.length = sortedDates.filter((a: string) => new Date(a).getFullYear() === new Date().getFullYear()).length;
+      this.data.slice.length = sortedDates.filter((a: string) => new Date(a).getFullYear() >= 2021).length;
       this.data.slice.data = this.data.groupedByDate.slice(-1 * this.data.slice.length);
       this.data.slice.timeKeys = this.data.slice.data.map((slice: any[]) => slice[0]);
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
