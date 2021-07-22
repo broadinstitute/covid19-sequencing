@@ -7,9 +7,20 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Build
+## Build and Deploy
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Please use `npm run deploy` to build the project with production
+configuration. The build artifacts will be stored in the `docs/` directory.
+
+We use a special branch `gh-pages` to host the static files for
+Github Pages, so `docs/` directory should NOT be commited.
+
+Whenever a Pull Request is approved and merged into `master`
+branch, a Github Action will be triggered to:
+
+- push the updated artifacts to `gh-pages` branch.
+- deploy the latest website to its destination, which is hosted by Github Pages.
+
 
 ## Set Up Cors
 1. [Get an authorization token from the google OAuth 2.0 playground](https://developers.google.com/oauthplayground/) - Select Access Approval, then select https://www.googleapis.com/auth/cloud-platform
