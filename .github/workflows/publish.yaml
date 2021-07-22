@@ -1,9 +1,10 @@
-name: PR Test
+name: Deploy Website
 
 on:
   pull_request:
     branches:
-      - master
+      - main
+  workflow_dispatch:
 
 jobs:
   pr-test:
@@ -29,3 +30,9 @@ jobs:
 
       - name: Install and Build with Prod config
         run: npm install && npm run deploy
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: docs

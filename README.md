@@ -15,7 +15,7 @@ configuration. The build artifacts will be stored in the `docs/` directory.
 We use a special branch `gh-pages` to host the static files for
 Github Pages, so `docs/` directory should NOT be commited.
 
-Whenever a Pull Request is approved and merged into `master`
+Whenever a Pull Request is approved and merged into `main`
 branch, a Github Action will be triggered to:
 
 - push the updated artifacts to `gh-pages` branch.
