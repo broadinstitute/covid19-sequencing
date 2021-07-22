@@ -1,4 +1,7 @@
 # covid19-sequencing
+
+[![Deploy Website](https://github.com/broadinstitute/covid19-sequencing/actions/workflows/publish.yaml/badge.svg)](https://github.com/broadinstitute/covid19-sequencing/actions/workflows/publish.yaml)
+
 COVID-19 sequencing dashboard
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
