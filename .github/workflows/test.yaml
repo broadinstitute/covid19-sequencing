@@ -14,6 +14,11 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
@@ -21,11 +26,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
-      - name: Setup NodeJS
-        uses: actions/checkout@v2
-        with:
-          node-version: '14'
 
       - name: Install and Build with Prod config
         run: npm install && npm run deploy
