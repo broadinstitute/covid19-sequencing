@@ -68,7 +68,6 @@ export class AppComponent {
         duration: 300,
         easing: 'ease-in-sine',
         delay: 0,
-        disable: 'mobile',
         once: true
       });
 
