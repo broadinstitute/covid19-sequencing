@@ -11,13 +11,13 @@
     <h1 class="flex-row">
       COVID-19 Genomic Surveillance
     </h1>
-  
+
     <div class="stat-box">
       <div class="label">Last Updated:</div>
       <div class="value">{{ data.lastUpdated }}</div>
       <div class="detail">Updated Weekly</div>
     </div>
-  
+
     <div class="stat-box stat-box-accent flex-col">
         <div class="margin-right-10">
           <div class="label">Total Samples Sequenced:</div>
@@ -42,19 +42,19 @@
 
         <div class="padding-left-30">
           <h2>States we serve</h2>
-        
+
           <div>
-            Currently, the majority of samples sequenced are residual diagnostic samples 
-            from the Broad’s large scale COVID-19 testing platform. Many of these come 
-            from Massachusetts and the Northeast region more broadly. We also receive samples 
-            from external collaborators including hospitals, public health departments, 
+            Currently, the majority of samples sequenced are residual diagnostic samples
+            from the Broad’s large scale COVID-19 testing platform. Many of these come
+            from Massachusetts and the Northeast region more broadly. We also receive samples
+            from external collaborators including hospitals, public health departments,
             diagnostic labs, and research labs.
           </div>
         </div>
       </div>
       <!-- <div class="state-list flex-col">
         <div *ngFor="let state of statesServed" class="state-container flex-row">
-          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div> 
+          <div class="state-icon" [attr.aria-hidden]="true" [style.transform]="state.rotation">{{ state.glyph }}</div>
           <span>{{ state.name }}</span>
         </div>
       </div> -->
@@ -68,20 +68,20 @@
 
     <div class="flex-row">
       <div class="description">
-        <p>In response to the need for COVID-19 genomic surveillance we have scaled our 
-          ability to sequence SARS-CoV-2 from positive diagnostic samples. Here, we show 
-          the numbers of samples sequenced at the Broad weekly, and cumulatively. We 
-          strive to generate data in real time and share the findings with state public 
-          health officials and the CDC. We also share the genomic data immediately in 
+        <p>In response to the need for COVID-19 genomic surveillance we have scaled our
+          ability to sequence SARS-CoV-2 from positive diagnostic samples. Here, we show
+          the numbers of samples sequenced at the Broad weekly, and cumulatively. We
+          strive to generate data in real time and share the findings with state public
+          health officials and the CDC. We also share the genomic data immediately in
           public databases for the scientific community to access.</p>
 
-        <p>For complete reporting of variants, please visit the 
+        <p>For complete reporting of variants, please visit the
           <a class="btn-link bold" href="https://www.cdc.gov/coronavirus/2019-ncov/variants/variant-cases.html">
           CDC - US COVID-19 Cases Caused by Variants</a>
         </p>
       </div>
 
-      <div class="flex-col margin-top-20 chart-container">
+      <div class="flex-col margin-top-20 padding-left-20 chart-container">
         <div *ngIf="data.error" class="error-container">
           There was a problem loading this chart, <br/>
           please refresh the page to reload
@@ -100,16 +100,16 @@
     <h2>The Broad Institute's COVID-19 viral sequencing effort</h2>
 
     <div class="margin-top-25">
-      With support from the CDC, the Broad has launched an effort to perform large-scale 
-      sequencing of SARS-CoV-2 for variant surveillance and pbulic health response in the 
-      Northeast. The Viral Genomics Group and Genomics Platform are working together to 
-      sequence the virus from thousands of COVID-19 positive samples each week from the 
-      institute's diagnostics lab, with bioinformatics support from the Data Sciences 
-      Platform. The results are currently being shared with public health partners to help 
-      slow the spread of concerning variants, and with the scientific community to learn 
+      With support from the CDC, the Broad has launched an effort to perform large-scale
+      sequencing of SARS-CoV-2 for variant surveillance and pbulic health response in the
+      Northeast. The Viral Genomics Group and Genomics Platform are working together to
+      sequence the virus from thousands of COVID-19 positive samples each week from the
+      institute's diagnostics lab, with bioinformatics support from the Data Sciences
+      Platform. The results are currently being shared with public health partners to help
+      slow the spread of concerning variants, and with the scientific community to learn
       more about the evolution and spread of SARS-CoV-2.
     <br/>
-    Learn more in a 
+    Learn more in a
     <a class="btn-link-white" href="https://www.broadinstitute.org/news/broad-expands-covid-19-viral-sequencing-efforts-variant-surveillance-northeast">
     Broad news story and video</a>.
     </div>
@@ -120,19 +120,19 @@
   <div class="content">
     <h2>COVID-19 variant tracking</h2>
 
-    <p>We are tracking known Variants of Concern and Variants of Interest 
-    as defined by the CDC. Here we report the proportion of known 
-    variants detected in viruses sequenced at the Broad, by week. We are 
-    also monitoring the genomic data for the possible emergence of new 
+    <p>We are tracking known Variants of Concern and Variants of Interest
+    as defined by the CDC. Here we report the proportion of known
+    variants detected in viruses sequenced at the Broad, by week. We are
+    also monitoring the genomic data for the possible emergence of new
     variants worthy of additional investigation.</p>
 
-    <p class="label subtitle">Note: These do not include data from other sources, numbers may 
-    differ from other public dashboards due to time lags in updating 
+    <p class="label subtitle">Note: These do not include data from other sources, numbers may
+    differ from other public dashboards due to time lags in updating
     across multiple sites. This dashboard is updated weekly.</p>
 
-    <p>See <a class="btn-link bold" href="https://covid.cdc.gov/covid-data-tracker/#datatracker-home">here</a> 
-    for the CDC’s overview of these variants, and official reports on their numbers 
-    by state combined across all data sources. Note that currently there are no 
+    <p>See <a class="btn-link bold" href="https://covid.cdc.gov/covid-data-tracker/#datatracker-home">here</a>
+    for the CDC’s overview of these variants, and official reports on their numbers
+    by state combined across all data sources. Note that currently there are no
     “Variants of High Consequence” as defined by the CDC.</p>
   </div>
 </div>
@@ -189,10 +189,10 @@
         <img src="{{ env.assetPath }}assets/images/terra-logo.png" width=200>
         <h3>Terra Workspaces</h3>
         <div class="margin-top-10">
-          Data and analytical tools are shared openly in a newly featured 
-          <a class="btn-link bold" href="https://app.terra.bio/#workspaces/pathogen-genomic-surveillance/COVID-19_Broad_Viral_NGS">COVID-19 Broad Viral NGS workspace</a> 
-          in Terra, so other research and public health labs can explore and use these resources for their own work. 
-          The workspace is designed to enable researchers to go all the way from raw reads to phylogenetic trees 
+          Data and analytical tools are shared openly in a newly featured
+          <a class="btn-link bold" href="https://app.terra.bio/#workspaces/pathogen-genomic-surveillance/COVID-19_Broad_Viral_NGS">COVID-19 Broad Viral NGS workspace</a>
+          in Terra, so other research and public health labs can explore and use these resources for their own work.
+          The workspace is designed to enable researchers to go all the way from raw reads to phylogenetic trees
           using their own data.
         </div>
       </div>
@@ -202,8 +202,8 @@
         <h3>Broad SARS-CoV-2 Phylogenetic Trees</h3>
 
         <div class="margin-top-10">
-          View the Broad’s SARS-CoV-2 interactive 
-          <a class="btn-link bold" href="https://auspice.broadinstitute.org/">visualizations</a> built using 
+          View the Broad’s SARS-CoV-2 interactive
+          <a class="btn-link bold" href="https://auspice.broadinstitute.org/">visualizations</a> built using
           Auspice, a tool from the Fred Hutch and the Bedford Lab.
         </div>
       </div>

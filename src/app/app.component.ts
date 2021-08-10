@@ -124,7 +124,7 @@ export class AppComponent {
         .sort((a: string, b: string) => {
           return new Date(a) > new Date(b) ? 1 : -1;
         });
-      
+
       this.data.groupedByDate = sortedDates.map((a: string) => dateMap[a]);
       this.data.totalSamplesSequenced = this.data.groupedByDate.reduce((a: number, b: string[]) => a + b.length - 1, 0);
       this.data.slice.length = sortedDates.filter((a: string) => new Date(a).getFullYear() >= 2021).length;
@@ -178,7 +178,13 @@ export class AppComponent {
           width: scalingChartWidth,
           height: scalingChartWidth * .7,
           xaxis: { title: 'Collection Week', standoff: 100 },
-          yaxis: { title: 'Count of Samples Sequenced' },
+          yaxis: {
+            title: {
+              text: 'Count of Samples Sequenced',
+              standoff: 50
+            },
+            ticklabelposition: "inside top"
+          },
           showlegend: false,
           barmode: 'group',
           bargap: .55,
@@ -192,7 +198,7 @@ export class AppComponent {
             }
           },
           margin: {
-            l: 0, r: 100, t: 30, b: 130
+            l: 50, r: 100, t: 30, b: 130
           },
           font: {
             family: 'Lato',
@@ -277,14 +283,17 @@ export class AppComponent {
             title: 'Count'
           },
           yaxis: {
-            title: 'Count of Samples Sequenced',
+            title: {
+              text: 'Count of Samples Sequenced',
+            },
+            ticklabelposition: "inside top"
           },
           barmode: 'stack',
           bargap: .35,
           bargroupgap: 4,
           showlegend: false,
           margin: {
-            l: 0, r: 0, t: 70
+            l: 50, r: 0, t: 70
           }
         }
       };
