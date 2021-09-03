@@ -102,7 +102,11 @@ export class AppComponent {
       let colIndices = this.parseColData(rows.shift());
       let dateMap: any = {};
 
-      rows.forEach((row) => {
+      console.log(`=> Filtering out empty lines from: raw ${rows.length} rows`)
+      const validRows = rows.filter(Boolean);
+      console.log(`=> There are ${validRows.length} lines from raw data that are not empty`)
+
+      validRows.forEach((row) => {
         let rowArr = row.split('\t');
         let date = rowArr[colIndices.collection_epiweek_end];
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
