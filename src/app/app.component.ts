@@ -108,7 +108,7 @@ export class AppComponent {
 
       validRows.forEach((row) => {
         let rowArr = row.split('\t');
-        let date = rowArr[colIndices.collection_epiweek_end];
+        let date = rowArr[colIndices.collection_date];
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
         let clade = rowArr[colIndices.nextclade_clade];
         let lineage = clade.indexOf('(') === -1
@@ -147,7 +147,7 @@ export class AppComponent {
         'pango_lineage',
         'genome_status',
         'nextclade_clade',
-        'collection_epiweek_end'
+        'collection_date'
       ];
       let colIndices: any = {};
       let colsArr = cols.split('\t');
