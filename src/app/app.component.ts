@@ -106,9 +106,12 @@ export class AppComponent {
       const validRows = rows.filter(Boolean);
       console.log(`=> There are ${validRows.length} lines from raw data that are not empty`)
 
+      var lastUpdatedAt = new Date(0);
+
       validRows.forEach((row) => {
         let rowArr = row.split('\t');
-        let date = rowArr[colIndices.collection_date];
+        let date = rowArr[colIndices.collection_epiweek_end];
+        let collectionDate = new Date(rowArr[colIndices.collection_date]);
         let failed = rowArr[colIndices.genome_status] === 'failed_sequencing';
         let clade = rowArr[colIndices.nextclade_clade];
         let lineage = clade.indexOf('(') === -1
@@ -120,6 +123,10 @@ export class AppComponent {
             dateMap[date] = [date];
           }
           dateMap[date].push(lineage);
+        }
+
+        if (collectionDate > lastUpdatedAt) {
+          lastUpdatedAt = collectionDate;
         }
       });
 
@@ -137,7 +144,7 @@ export class AppComponent {
       this.data.slice.timeLabels = this.data.slice.data.map((slice: any[]) => {
         return slice[0];
       });
-      this.data.lastUpdated = sortedDates[sortedDates.length - 1];
+      this.data.lastUpdated = lastUpdatedAt.toISOString().split('T')[0];
     }
 
     parseColData(cols: string | undefined) {
@@ -147,6 +154,7 @@ export class AppComponent {
         'pango_lineage',
         'genome_status',
         'nextclade_clade',
+        'collection_epiweek_end',
         'collection_date'
       ];
       let colIndices: any = {};
