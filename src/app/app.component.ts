@@ -380,10 +380,6 @@ export class AppComponent {
         return {count: variantsByCount[variant], name: variant};
       }).sort((a, b) => (a.count < b.count) ? 1 : (a.count === b.count) ? ((a.count < b.count) ? 1 : -1) : -1 );
 
-      sortedVariants.forEach((variant) => {
-        console.log(variant.name + ' has ' + variant.count);
-      });
-
       let variantColors = [
         '#eb9f4d', '#e84615', '#a83f02',
         '#f5c173', '#f26c3e', '#f11808',
