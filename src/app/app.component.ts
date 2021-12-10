@@ -207,6 +207,7 @@ export class AppComponent {
             },
           },
           yaxis2: {
+            showgrid:false,
             range: [0, maxWeekly],
             title: {
               text: 'Weekly Samples Sequenced',
