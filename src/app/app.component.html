@@ -86,9 +86,6 @@
           There was a problem loading this chart, <br/>
           please refresh the page to reload
         </div>
-        <button mat-stroked-button color="primary" (click)="toggleCumulative()" *ngIf="!data.error">
-          {{ scalingChartMode === 'combined' ? 'Hide' : 'Show'}} Cumulative
-        </button>
         <plotly-plot [divId]="scalingChartId" [data]="scalingChart.data" [layout]="scalingChart.layout"></plotly-plot>
       </div>
     </div>

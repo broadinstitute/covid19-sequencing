@@ -178,9 +178,16 @@ export class AppComponent {
       let totalWeekly = this.scalingData.weekly.reduce((a: number, b: number) => a + b, 0);
 
       this.scalingData.cumulative = [this.data.totalSamplesSequenced - totalWeekly + this.scalingData.weekly[0]];
+      let maxWeekly = 0;
+      let maxCumulative = 0;
       this.scalingData.weekly.forEach((val: any, i: number) => {
         if (i !== 0) {
           this.scalingData.cumulative[i] = val + this.scalingData.cumulative[i-1];
+
+          if (val > maxWeekly) {
+            maxWeekly = val;
+          }
+          maxCumulative = this.scalingData.cumulative[i];
         }
       });
 
@@ -189,13 +196,26 @@ export class AppComponent {
         layout: {
           width: scalingChartWidth,
           height: scalingChartWidth * .7,
-          xaxis: { title: 'Collection Week', standoff: 100 },
+          xaxis: { title: 'Collection Week', standoff: 100},
           yaxis: {
+            titlefont: {color: 'orange'},
+            tickfont: {color: 'orange'},
+            range: [0, maxCumulative],
             title: {
-              text: 'Count of Samples Sequenced',
+              text: 'Cumulative Samples Sequenced',
               standoff: 50
             },
-            ticklabelposition: "inside top"
+          },
+          yaxis2: {
+            range: [0, maxWeekly],
+            title: {
+              text: 'Weekly Samples Sequenced',
+              standoff: 50
+             },
+            titlefont: {color: '#046db6'},
+            tickfont: {color: '#046db6'},
+            overlaying: 'y',
+            side: 'right'
           },
           showlegend: false,
           barmode: 'group',
@@ -209,9 +229,7 @@ export class AppComponent {
               color: '#545f6e'
             }
           },
-          margin: {
-            l: 50, r: 100, t: 30, b: 130
-          },
+
           font: {
             family: 'Lato',
             size: 16
@@ -221,6 +239,7 @@ export class AppComponent {
 
       this.addCumulativeSeries();
       this.addWeeklySeries();
+
     }
 
     addCumulativeSeries() {
@@ -229,6 +248,7 @@ export class AppComponent {
       this.scalingChart.data.push({
         x: this.scalingData.time,
         y: this.scalingData.cumulative,
+        yaxis: 'y1',
         type: 'scatter',
         mode: 'lines+markers+text',
         marker: {color: 'orange'},
@@ -244,7 +264,7 @@ export class AppComponent {
       this.scalingChart.data.push({
         x: this.scalingData.time,
         y: this.scalingData.weekly,
-        textposition: 'auto',
+        yaxis:'y2',
         type: 'bar',
         marker: { color: '#046db6' },
         mode: 'markers+text',
@@ -317,6 +337,7 @@ export class AppComponent {
       // Variables to determine the "other variants" count
       let variantsByTime: any = {};
       let variantsOfInterest: any = {};
+      let variantsByCount: any = {};
 
       // Converting the raw data into chart data
       this.data.slice.data.forEach((variantsByDateArr: string[]) => {
@@ -338,6 +359,9 @@ export class AppComponent {
             variant = 'Other Variants';
           }
 
+          if (!variantsByCount[variant]) {
+            variantsByCount[variant] = 0;
+          }
           if (!variantsByTime[variant]) {
             variantsByTime[variant] = {};
           }
@@ -346,14 +370,24 @@ export class AppComponent {
             variantsByTime[variant][date] = 0;
           }
 
+          variantsByCount[variant]++;
           variantsByTime[variant][date]++;
         });
+      });
+
+
+      let sortedVariants = Object.keys(variantsOfInterest).map((variant, idx) => {
+        return {count: variantsByCount[variant], name: variant};
+      }).sort((a, b) => (a.count < b.count) ? 1 : (a.count === b.count) ? ((a.count < b.count) ? 1 : -1) : -1 );
+
+      sortedVariants.forEach((variant) => {
+        console.log(variant.name + ' has ' + variant.count);
       });
 
       let variantColors = [
         '#eb9f4d', '#e84615', '#a83f02',
         '#f5c173', '#f26c3e', '#f11808',
-        '#f1eb08', '#e0c602', '#fd9f3b'
+        '#f1eb08', '#e0c602', '#fd9f3b','#3BA06B','#982FA6'
       ]
 
       this.variantsData = {
@@ -361,8 +395,8 @@ export class AppComponent {
           { title: 'Variants of High Consequence', values: [], visible: true },
           {
             title: 'Variants of Concern or Interest',
-            values: Object.keys(variantsOfInterest).map((variant, idx) => {
-              return { color: variantColors[idx], name: variant };
+            values: sortedVariants.map((variant, idx) => {
+              return { color: variantColors[idx], name: variant.name };
             }),
             visible: true
           },
@@ -399,6 +433,7 @@ export class AppComponent {
           });
         });
       });
+
 
       (this.variantsChart.layout as any).yaxis.range = [0, Math.max(...stacks) * 1.1];
     }
