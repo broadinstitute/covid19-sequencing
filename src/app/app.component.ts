@@ -381,10 +381,21 @@ export class AppComponent {
         return {count: variantsByCount[variant], name: variant};
       }).sort((a, b) => (a.count < b.count) ? 1 : (a.count === b.count) ? ((a.count < b.count) ? 1 : -1) : -1 );
 
+
       let variantColors = [
-        '#eb9f4d', '#e84615', '#a83f02',
-        '#f5c173', '#f26c3e', '#f11808',
-        '#f1eb08', '#e0c602', '#fd9f3b','#3BA06B','#982FA6'
+        'rgb(127,60,141)',
+        'rgb(29,105,150)',
+        'rgb(15,133,84)',
+        'rgb(115,175,72)',
+        'rgb(237,173,8',
+        'rgb(255,124,5',
+        'rgb(204,80,62)',
+        'rgb(148,52,100)',
+        'rgb(111,64,112)',
+        'rgb(102,102,102)',
+        'rgb(204,204,204)',
+        'rgb(204,204,204)',
+        'rgb(204,204,204)'
       ]
 
       this.variantsData = {
@@ -393,7 +404,11 @@ export class AppComponent {
           {
             title: 'Variants of Concern or Interest',
             values: sortedVariants.map((variant, idx) => {
-              return { color: variantColors[idx], name: variant.name };
+              if (variant.name.toUpperCase() === 'OMICRON') {
+                return { color: 'rgb(56,166,165)', name: variant.name};
+              } else {
+                return {color: variantColors[idx], name: variant.name};
+              }
             }),
             visible: true
           },
