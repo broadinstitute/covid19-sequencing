@@ -404,7 +404,7 @@ export class AppComponent {
           {
             title: 'Variants of Concern or Interest',
             values: sortedVariants.map((variant, idx) => {
-              if (variant.name === 'Omicron') {
+              if (variant.name.toUpperCase() === 'OMICRON') {
                 return { color: 'rgb(56,166,165)', name: variant.name};
               } else {
                 return {color: variantColors[idx], name: variant.name};
