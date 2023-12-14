@@ -63,63 +63,6 @@
   </div>
 </div>
 
-<div id="methods-container" class="content-container" data-aos="fade-up">
-  <div class="content">
-    <h2>COVID-19 variant tracking</h2>
-
-    <p>Here we report the proportion of known variants detected in viruses sequenced at the Broad, by week.</p>
-
-    <p class="label subtitle">Note: These do not include data from other sources.</p>
-
-    <p>See <a class="btn-link bold" href="https://covid.cdc.gov/covid-data-tracker/#datatracker-home">here</a>
-    for the CDC’s overview of these variants, and official reports on their numbers
-    by state combined across all data sources.
-  </div>
-</div>
-
-<div id="variants-container" class="content-container" data-aos="fade-up">
-  <div class="content">
-    <h2>Weekly counts of variants detected at the Broad Institute</h2>
-    <div class="flex-row">
-      <div *ngIf="data.error" class="error-container">
-        There was a problem loading this chart, <br/>
-        please refresh the page to reload
-      </div>
-
-      <div class="margin-right-30">
-        <plotly-plot [divId]="variantsChartId" [data]="variantsChart.data" [layout]="variantsChart.layout"></plotly-plot>
-      </div>
-
-      <div class="chart-controls">
-        <div class="control-group" *ngFor="let controlGroup of variantsData.groups">
-          <div class="flex-row">
-            <mat-slide-toggle color="primary"
-              [(ngModel)]="controlGroup.visible"
-              [disabled]="controlGroup.values.length === 0"
-              (change)="toggleGroupVisibility(controlGroup)">
-            </mat-slide-toggle>
-            <label class="margin-left-15">{{ controlGroup.title }}</label>
-          </div>
-          <div class="margin-left-50 padding-bottom-10">
-            <div *ngIf="controlGroup.values?.length === 0"
-              class="label subtitle-accent margin-top-10 margin-bottom-10">
-              There are currently no reported {{ controlGroup.title }}
-            </div>
-
-            <div *ngFor="let value of controlGroup.values" class="flex-row margin-top-10 margin-bottom-10">
-              <i class="fa fa-circle margin-right-5" [style.color]="value.color"></i>
-              <div class="label margin-left-15">
-                <div class="name">{{ value.name }}</div>
-                <div class="subtitle margin-top-5">{{ value.desc }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div id="resources-container" class="content-container content-container-alt" data-aos="fade-up">
   <div class="content">
     <h2>More resources</h2>
